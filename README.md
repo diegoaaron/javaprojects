@@ -9,11 +9,11 @@ Ejercicios sobre scripts utilizando Java
 
 ### 📒 Contenido
 
-- [] [Curso Java Básico](freecode_api/README.md)
+- [x] [Curso basico 1](https://github.com/diegoaaron/javaprojects/tree/main/presupuesto)
 
 
 ### ⚙️ Referencias
 
 Información de referencia para los ejercicios.
 
-- [Curso Java Básico](https://youtu.be/SpR_jWINBzg)
+- [Curso Java Básico ATL](https://atl.academy/bootcamp/java/)
