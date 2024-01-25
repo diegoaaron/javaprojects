@@ -9,7 +9,10 @@ Ejercicios sobre scripts utilizando Java
 
 ### 📒 Contenido
 
-- [x] [Curso basico 1](https://github.com/diegoaaron/javaprojects/tree/main/presupuesto)
+- [x] [variables](https://github.com/diegoaaron/javaprojects/tree/main/presupuesto)
+- [x] [arrays](https://github.com/diegoaaron/javaprojects/tree/main/arreglos)
+- [x] [funciones](https://github.com/diegoaaron/javaprojects/tree/main/funcionesyspring)
+- [x] [spring boot](https://github.com/diegoaaron/javaprojects/tree/main/bootcamp)
 
 
 ### ⚙️ Referencias
