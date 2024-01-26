@@ -22,7 +22,7 @@ public class Main {
 
         // forma 2
         for(String nombrePersona: personas) {
-            if(nombrePersona.contains(personaAEncontrar)) {
+            if(nombrePersona.toLowerCase().contains(personaAEncontrar.toLowerCase())) {
                 System.out.println("La persona es: " + nombrePersona);
             }
         }
