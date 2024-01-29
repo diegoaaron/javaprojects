@@ -13,6 +13,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [arrays](https://github.com/diegoaaron/javaprojects/tree/main/arreglos)
 - [x] [funciones](https://github.com/diegoaaron/javaprojects/tree/main/funcionesyspring)
 - [x] [spring boot](https://github.com/diegoaaron/javaprojects/tree/main/bootcamp)
+- [ ] [Programacion POO](#)
 
 ### ⚙️ Referencias
 
