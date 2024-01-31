@@ -14,7 +14,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [funciones](https://github.com/diegoaaron/javaprojects/tree/main/funcionesyspring)
 - [x] [spring boot](https://github.com/diegoaaron/javaprojects/tree/main/bootcamp)
 - [x] [Programacion POO](https://github.com/diegoaaron/javaprojects/tree/main/poobasico)
-- [x] [Ejercicio POO](#)
+- [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 
 ### ⚙️ Referencias
 
