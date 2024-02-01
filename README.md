@@ -15,8 +15,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [spring boot](https://github.com/diegoaaron/javaprojects/tree/main/bootcamp)
 - [x] [Programacion POO](https://github.com/diegoaaron/javaprojects/tree/main/poobasico)
 - [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
-- [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
-- [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
+- [x] [Herencia POO](#)
 
 ### ⚙️ Referencias
 
