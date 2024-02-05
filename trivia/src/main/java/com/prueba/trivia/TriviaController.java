@@ -1,5 +1,7 @@
 package com.prueba.trivia;
 
+import ch.qos.logback.core.net.ObjectWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prueba.trivia.entities.Categoria;
 import com.prueba.trivia.entities.Pregunta;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,16 +14,12 @@ public class TriviaController {
     @GetMapping("/question/{categoria}")
     public Pregunta getQuestion(@PathVariable String categoria){
 
-        Pregunta preg = new Pregunta();
-        preg.setCategory("Cultura");
-        preg.setQuestion("¿Qué ingredintes se necesitan para hacer una michelada?");
-        preg.setAnswer(0);
-        preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-        String[] options = new String[3];
-        options[0] = "Cerveza, lima, limón, sal, chile en polvo, salsa tipo inglesa, picante";
-        options[1] = "Cerveza, lima, limón y limon";
-        options[2] = "Cerveza, sal, tabasco y lima,limón";
-        preg.setOption(options);
+        ChatGptClient chatGpt = new ChatGptClient();
+        String respuestaJson = chatGpt.enviarPregunta("Como estas chatgpt hoy? te sientes bien");
+
+        ObjectMapper convertidor = new ObjectMapper();
+        Pregunta preg =  convertidor.convertValue(respuestaJson,Pregunta.class);
+
         return  preg;
 
         /*
