@@ -16,7 +16,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [Programacion POO](https://github.com/diegoaaron/javaprojects/tree/main/poobasico)
 - [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 - [x] [Herencia POO](https://github.com/diegoaaron/javaprojects/tree/main/demo)
-- [ ] [Ejercicio POO 2](#)
+- [x] [Ejercicio POO 2](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 
 ### ⚙️ Referencias
 
