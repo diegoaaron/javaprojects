@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 public class TriviaController {
 
     @GetMapping("/question/{categoria}")
-    public Pregunta getQuestion(@PathVariable String categoria){
+    public Pregunta getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
 
         ChatGptClient chatGpt = new ChatGptClient();
-        String respuestaJson = chatGpt.enviarPregunta("Como estas chatgpt hoy? te sientes bien");
+        String respuestaJson = chatGpt.enviarPregunta("cuentame 3 chistes");
 
         ObjectMapper convertidor = new ObjectMapper();
         Pregunta preg =  convertidor.convertValue(respuestaJson,Pregunta.class);

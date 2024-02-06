@@ -7,9 +7,7 @@ public class Pregunta {
     private Integer answer;
     private String explanation;
 
-    public String getCategory() {
-        return category;
-    }
+    public String getCategory() { return category;}
 
     public void setCategory(String category) {
         this.category = category;
