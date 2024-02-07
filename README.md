@@ -17,6 +17,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [Ejercicio POO](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 - [x] [Herencia POO](https://github.com/diegoaaron/javaprojects/tree/main/demo)
 - [x] [Ejercicio POO 2](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
+- [ ] [Ejercicio gestion usuarios](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 
 ### ⚙️ Referencias
 
