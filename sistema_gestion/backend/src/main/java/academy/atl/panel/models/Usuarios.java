@@ -2,11 +2,16 @@ package academy.atl.panel.models;
 
 import lombok.*;
 
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@Data @AllArgsConstructor
 public class Usuarios {
     private Integer id;
     private String nombre;
     private String apellido;
     private String telefono;
     private String email;
+
+    /*
+    public Usuarios(int i, String lucas, String moy, String number, String mail) {
+    }
+     */
 }
