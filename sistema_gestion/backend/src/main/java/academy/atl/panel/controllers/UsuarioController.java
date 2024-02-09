@@ -12,26 +12,30 @@ import java.util.List;
 @RestController
 public class UsuarioController {
 
-    List<Usuarios> usuariosx = new ArrayList<>();
+    static List<Usuarios> usuarios = new ArrayList<>();
     @GetMapping("/api/usuarios")
     public List<Usuarios> listarUsuarios(){
 
-        Usuarios user = new Usuarios(1,"lucas","moy","954715233", "diegoaarondv@gmail.com");
-
-        System.out.println("");
-        usuariosx.add(user);
-        System.out.println(usuariosx.toString());
-        return usuariosx;
+        return usuarios;
     }
 
     @DeleteMapping("/api/usuarios/{id}")
-    public String eliminarUsuario(@PathVariable String id){
-        return "El ID del usuario a eliminar es: " + id;
+    public void eliminarUsuario(@PathVariable String id){
+
+        for(Usuarios user: usuarios){
+            if(id.equals(user.getId().toString())){
+                usuarios.remove(user);
+            }
+        }
+
+        //Usuarios usuarioEncontrado = usuarios.stream().filter(user -> user.getId().equals(id)).findFirst().get();
+        //usuarios.remove(usuarioEncontrado);
     }
 
-    @PostMapping("prueba")
-    public String prueba3(){
-        return "Prueba de request Post";
+    @PostMapping("/api/usuarios")
+    public void agregarUsuario(@RequestBody Usuarios user){
+
+        usuarios.add(user);
     }
 
     @PutMapping("prueba")
