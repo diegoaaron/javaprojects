@@ -3,14 +3,14 @@ import java.util.List;
 
 public class Personaje {
 
-    private int experiencia;
-    private int level;
-    private int hp;
-    private int mana;
-    private int x;
-    private int y;
-    private String map;
-    private List<Item> items;
+    protected int experiencia;
+    protected int level;
+    protected int hp;
+    protected int mana;
+    protected int x;
+    protected int y;
+    protected String map;
+    protected List<Item> items;
 
     public Personaje(){
         hp = 100;
@@ -88,8 +88,15 @@ public class Personaje {
     public int getAtaqueTotal(){
         int ataqueTotal = 0;
         for(Item item: items){
-            ataqueTotal += item.getAtaque();
+            if (item instanceof Arma) {
+                ataqueTotal += item.getAtaque();
+            }
+
         }
         return ataqueTotal;
+    }
+
+    public int getMaximoHP(){
+        return level * 10;
     }
 }
