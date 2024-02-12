@@ -1,9 +1,8 @@
 package com.prueba.trivia;
 
-import ch.qos.logback.core.net.ObjectWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prueba.trivia.entities.Categoria;
-import com.prueba.trivia.entities.Pregunta;
+import com.prueba.trivia.entities.Category;
+import com.prueba.trivia.entities.Question;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +13,13 @@ import java.io.IOException;
 public class TriviaController {
 
     @GetMapping("/question/{categoria}")
-    public Pregunta getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
+    public Question getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
 
         ChatGptClient chatGpt = new ChatGptClient();
         String respuestaJson = chatGpt.enviarPregunta("cuentame 3 chistes");
 
         ObjectMapper convertidor = new ObjectMapper();
-        Pregunta preg =  convertidor.convertValue(respuestaJson,Pregunta.class);
+        Question preg =  convertidor.convertValue(respuestaJson, Question.class);
 
         return  preg;
 
@@ -36,21 +35,21 @@ public class TriviaController {
     }
 
     @GetMapping("/categories")
-    public Categoria[] getCategories() {
+    public Category[] getCategories() {
 
-        Categoria catArte = new Categoria();
-        catArte.setCategory("Arte");
+        Category catArte = new Category();
+        catArte.setName("Arte");
         catArte.setDescription("Preguntas relacionadas con pintura, escultura, arquitectura y otras formas de expresión artística.");
 
-        Categoria catDeporte = new Categoria();
-        catDeporte.setCategory("Deportes");
+        Category catDeporte = new Category();
+        catDeporte.setName("Deportes");
         catDeporte.setDescription("Preguntas relacionadas con diversos deportes y eventos deportivos.");
 
-        Categoria[] categorias = new Categoria[2];
-        categorias[0] = catArte;
-        categorias[1] = catDeporte;
+        Category[] categories = new Category[2];
+        categories[0] = catArte;
+        categories[1] = catDeporte;
 
-        return categorias;
+        return categories;
         /*
         return "[\n" +
                 "  {\n" +

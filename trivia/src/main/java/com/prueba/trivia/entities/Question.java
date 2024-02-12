@@ -1,0 +1,49 @@
+package com.prueba.trivia.entities;
+
+public class Question {
+    private Category category;
+    private String question;
+    private String[] option;
+    private Integer answer;
+    private String explanation;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String[] getOption() {
+        return option;
+    }
+
+    public void setOption(String[] option) {
+        this.option = option;
+    }
+
+    public Integer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Integer answer) {
+        this.answer = answer;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+}
