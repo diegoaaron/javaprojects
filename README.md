@@ -19,6 +19,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [Ejercicio POO 2](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 - [x] [Ejercicio gestion usuarios](https://github.com/diegoaaron/javaprojects/tree/main/sistema_gestion)
 - [ ] [Base de datos](https://github.com/diegoaaron/javaprojects/tree/main/bdintro)
+- [ ] [Pruebas API](#)
 
 ### ⚙️ Referencias
 
