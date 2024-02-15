@@ -3,35 +3,29 @@ package com.prueba.trivia;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prueba.trivia.entities.Category;
 import com.prueba.trivia.entities.Question;
+import com.prueba.trivia.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class TriviaController {
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @GetMapping("/question/{categoria}")
-    public Question getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
+    public Category getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
 
-        ChatGptClient chatGpt = new ChatGptClient();
-        String respuestaJson = chatGpt.enviarPregunta("cuentame 3 chistes");
-
-        ObjectMapper convertidor = new ObjectMapper();
-        Question preg =  convertidor.convertValue(respuestaJson, Question.class);
-
-        return  preg;
-
-        /*
-        return "{\n" +
-                "  \"category\": \"Cultura\",\n" +
-                "  \"question\": \"¿Qué " + categoria + " ingredintes se necesitan para hacer una michelada?\",\n" +
-                "  \"options\": [\"Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante\", \"Cerveza, lima/limón y limon\", \"Cerveza, sal, tabasco y lima/limón\"],\n" +
-                "  \"answer\": 0,\n" +
-                "  \"explanation\": \"La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.\"\n" +
-                "}";
-         */
+        List<Category> resultado = new ArrayList<>();
+        Category ejemplo = categoryRepository.findById(1L);
+        resultado.add(ejemplo);
+        return ejemplo;
     }
 
     @GetMapping("/categories")
