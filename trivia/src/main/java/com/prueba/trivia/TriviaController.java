@@ -19,6 +19,11 @@ public class TriviaController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @GetMapping("/busqueda-{id}")
+    public Category buscarPorId(@PathVariable Long id) {
+        return categoryRepository.findById(id);
+    }
+
     @GetMapping("/question/{categoria}")
     public Category getQuestion(@PathVariable String categoria) throws IOException, IllegalArgumentException {
 

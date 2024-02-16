@@ -6,7 +6,7 @@ target/
 
 # ENV
 .env
-src/main/resources/application.properties
+
 *.properties
 
 ### STS ###

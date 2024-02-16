@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 public class CategoryRepository {
 
     @PersistenceContext
-    EntityManager entityManager;
+    EntityManager conexionBaseDeDatos;
 
     public Category findById(Long id) {
-        return entityManager.find(Category.class, id);
+        return conexionBaseDeDatos.find(Category.class, id);
     }
 
 }
