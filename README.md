@@ -19,7 +19,7 @@ Ejercicios sobre scripts utilizando Java
 - [x] [Ejercicio POO 2](https://github.com/diegoaaron/javaprojects/tree/main/trivia)
 - [x] [Ejercicio gestion usuarios](https://github.com/diegoaaron/javaprojects/tree/main/sistema_gestion)
 - [x] [Base de datos](https://github.com/diegoaaron/javaprojects/tree/main/bdintro)
-- [ ] [Java 1Z0-819 Intro](https://github.com/diegoaaron/javaprojects/tree/main/java_iz0_819_intro)
+- [x] [Java 1Z0-819 Intro](https://github.com/diegoaaron/javaprojects/tree/main/java_iz0_819_intro)
 
 ### ⚙️ Referencias
 
