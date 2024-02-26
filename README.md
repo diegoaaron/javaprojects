@@ -26,3 +26,4 @@ Ejercicios sobre scripts utilizando Java
 Información de referencia para los ejercicios.
 
 - [Curso Java Básico ATL](https://atl.academy/bootcamp/java/)
+- [Intro IZ0-819](https://youtu.be/VXiCiPYqFMg)
