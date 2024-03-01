@@ -14,6 +14,7 @@ public class Primitive {
         lo = 'a'; // Java realiza una promoción automática del tipo char al tipo destino.
 
         float flt = 3.2f;
+        flt = 2147483648L; //
         double d = 3.14; // double
         char c = 'a'; //
         c = 1;
