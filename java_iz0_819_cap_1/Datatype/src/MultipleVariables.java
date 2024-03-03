@@ -18,4 +18,17 @@ public class MultipleVariables {
         int i3;
         // i4;
     }
+
+    public Long wrapper(){
+        Boolean bo = false; // autoboxing
+        boolean boo = Boolean.valueOf(true); // unboxing
+
+        Byte b = 1;
+        Short s = 1;
+        Integer i = 1;
+        Long lo = 1L;
+        Float f = 3.14f;
+        Double d = 3.14;
+        return 1L;
+    }
 }
