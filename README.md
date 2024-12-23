@@ -9,7 +9,7 @@ Ejercicios sobre scripts utilizando Java
 ### 📒 Contenido
 
 - [x] [arreglos](arreglos/)
-- [x] [ejercicio bootcamp](https://github.com/diegoaaron/javaprojects/tree/main/arreglos)
-- [x] [poo basico](https://github.com/diegoaaron/javaprojects/tree/main/funcionesyspring)
-- [x] [sistema gestion](https://github.com/diegoaaron/javaprojects/tree/main/bootcamp)
--
+- [x] [ejercicio bootcamp](bootcamp/)
+- [x] [poo basico](poobasico/)
+- [x] [ejercicio presupuesto](presupuesto/)
+- [x] [sistema gestion](sistema_gestion/)
