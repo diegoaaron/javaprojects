@@ -1,0 +1,93 @@
+Entendiendo los operadores de Java
+
+un OPERADOR de JAVA es un simbolo especial que se aplica a variables, valores, o literales el cual retorna un resultado (imagen01)
+
+Java tiene 3 tipos de operadores: unario, binario y ternario
+
+imagen02 -> tabla de todos los operadores utilizados en el capítulo
+
+imagen03 -> tabla de los operadores unarios
+
+Para el examen, también necesitas saber sobre el operador de complemento a uno (~), el cual invierte todos los 0s y 1s de un número. Solo puede aplicarse a tipos numéricos enteros como byte, short, char, int y long. Intentemos un ejemplo. Por simplicidad, solo mostraremos los últimos cuatro bits (en lugar de todos los 32 bits).
+
+int value = 3 // es 0011
+int comp = ~value; // es 1100
+System.out.println(value); // 3
+System.out.println(comp); // -4
+
+No necesitas saber cómo hacer aritmética binaria complicada en el examen, siempre y cuando recuerdes esta regla: para encontrar el complemento a uno de un número, multiplícalo por menos uno y luego resta uno.
+
+int pelican = !5; // no compila porque no se puede hacer negacion de un número
+boolean pen = -true; // no compila porque no se puede hacer negativo un booleano
+boolean pek = !0; // no compila porque no se puede hacer una negación a un número
+
+los operadores de incremento y decremento se aplican a valores numericos y tienen mas presedencia que los operadores binarios o sea se aplican primero que ellos.
+
+para este tipo de operadores debemos tener en cuenta que importa la forma en que se aplica al numero (imagen04)
+
+por ejemplo:
+
+int park = 0;
+System.out.println(park); // 0
+System.out.println(++park); // 1
+
+System.out.println(park); // 1
+
+System.out.println(park--); // 1
+System.out.println(park); // 0
+
+los operadores aritmeticos binarios van a ser los más comunes (imagen05) las operaciones de multiplicación, división y residuo tienen mas presendencia que la suma y resta.
+
+int price = 2 * 5 + 3 * 4 - 8 (primero se evalua 2 * 5 y 3 * 4) quedando:
+
+int price = 10 + 12 - 8 (despues se evalua de izquieda a derecha obteniendo 14)
+
+los parentesis modifica el orden de ejecución por ejeemplo:
+
+int price = 2 * ((5 + 3) * 4 - 8);
+
+int price = 2 * (8 * 4 - 8);
+
+int price = 2 * (32 - 8);
+
+int price = 2 * 24;
+
+hay que tener cuidado ya que siempre deben haber parentesis completos para que el codigo compile. tambien tener en cuenta que solo los parentesis se permiten en opreaciones, las llaves o corchetes no son aceptados por java.
+
+ol perador modulo (%) permite obtener el residuo de una división
+
+System.out.println(10/3); // 3
+System.out.println(10%3); // 1
+
+para numeros decimales el valor del piso (floor) quiere decir que en 4.03, 4.3, 4.9999 va ser 4.
+
+La promoción numérica es un proceso automático en Java donde un tipo de dato numérico de menor rango se convierte temporalmente a un tipo de dato de mayor rango durante una operación aritmética. Esto se hace para evitar la pérdida de precisión y garantizar que el resultado de la operación sea correcto. Reglas:
+
+Si dos valores tienen tipos de datos diferentes, Java promoverá automáticamente uno de los valores al tipo de dato más grande de los dos.
+
+Si uno de los valores es un número entero y el otro es de punto flotante, Java promoverá automáticamente el valor entero al tipo de dato de punto flotante.
+
+Los tipos de datos más pequeños, como byte, short y char, se promocionan primero a int cada vez que se usan con un operador aritmético binario de Java con una variable (en oposición a un valor), incluso si ninguno de los operandos es int.
+
+Para la tercera regla, ten en cuenta que los operadores unarios están excluidos de esta regla. Por ejemplo, aplicar ++ a un valor short resulta en un valor short.
+
+int x = 1;
+log y = 33;
+var z = x * y; // z va ser LONG
+
+double x = 33.21;
+float y = 2.1; // esto arroja error de compilacion ya que debe acabar en "f"
+var z = x + y; // si se corrige la line aanterior z seria DOUBLE
+
+short x = 10;
+short y = 3;
+var z = x * y; // el valor de z sera INT por la tercera regla
+
+short w = 14; // se promueve a INT y despues a FLOAT
+float x = 13;
+double y = 30;
+var z = w * x / y; // W * X se promueve a DOUBLE y se opera con Y
+
+Asignacion de valores
+
+

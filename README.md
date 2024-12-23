@@ -13,3 +13,4 @@ Ejercicios sobre scripts utilizando Java
 - [x] [poo basico](poobasico/)
 - [x] [ejercicio presupuesto](presupuesto/)
 - [x] [sistema gestion](sistema_gestion/)
+- [x] [practica 1Z0-829](certi_1Z0_829/)
