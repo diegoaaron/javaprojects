@@ -148,5 +148,35 @@ Integer zooTime = Integer.valueOf(9);
 Number num = zooTime;
 Object obj = zooTime; // en este ejemplo obj es instancia de Number e Integer
 
+si Java detecta que los tipos de datos con instanceof no puede ser casteada para evaluarse arrojara error.
+
+respecto a NULL debemos saber que instanceof aplicado a un NULL literal o referenciado siempre arrojara FALSE.
+
+Obj a1 = null;
+System.out.println(a1 instanceof String); // false
+
+System.out.println(null instanceof null); // esta nunca compilara
+
+operadores logicos: son &, |, ^ que pueden ser aplicados a boolean o numericos (imagen09) tener en cuenta que para estos operadores. AND solo es si ambos son verdaderos. OR solo da falso si ambos son falsos y OR da verdadero si ambos son diferentes.
+
+operadores condicionales, trabajan segun la imagen10. por eje
+
+int hour = 10;
+boolean z1 = true || (hour < 4);
+System.out.println(z1); // siempre arrojara verdad ya que para el tipo "O" si el primero es verdad ya no se evalua el segundo.
+
+uso de operadores condicionales para evitar los NullPointerException: Un ejemplo muy común donde se utilizan los operadores condicionales es para verificar si un objeto es nulo antes de realizar una operación.En el siguiente ejemplo, si duck es nulo, el programa lanzará una excepción NullPointerException en tiempo de ejecución:
+
+if (duck != null & duck.getAge() < 5) { // Podría lanzar una NullPointerException
+    // Hacer algo
+}
+
+El problema es que el operador lógico AND (&) evalúa ambos lados de la expresión. Podríamos agregar una segunda condición if, pero esto se volvería engorroso si tenemos muchas variables que verificar. Una solución fácil de leer es usar el operador AND condicional (&&):
+
+if (duck != null && duck.getAge() < 5) {
+    // Hacer algo
+}
+
+En este ejemplo, si duck es nulo, la condición impide que se lance una NullPointerException, ya que la evaluación de duck.getAge() < 5 nunca se alcanza.
 
 
