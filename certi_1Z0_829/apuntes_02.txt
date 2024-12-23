@@ -88,6 +88,32 @@ float x = 13;
 double y = 30;
 var z = w * x / y; // W * X se promueve a DOUBLE y se opera con Y
 
-Asignacion de valores
+
+el simbolo "=" sirve como operador de asignación y lo hace de derecha a izquierda. arrojara un error si detecta que se desea asignar a la izquierda un valor mas grande que esta a la derecha sin haber echo casting.
+
+casteo de valores: La conversión de tipos (casting) es una operación unaria en la que un tipo de dato se interpreta explícitamente como otro tipo de dato. La conversión es obligatoria al convertir a un tipo de dato más pequeño (narrowing). Sin la conversión, el compilador generará un error al intentar colocar un tipo de dato más grande dentro de uno más pequeño.
+La conversión de tipos se realiza colocando el tipo de dato, encerrado entre paréntesis, a la izquierda del valor que deseas convertir. Aquí hay algunos ejemplos de conversión de tipos:
+
+int fur = (int) 5; // compila
+short tail = (short) (4 + 10); // compila, se pone la suma en parentesis para que se aplique al resultado.
+long x1 = 10(long); // no compila
+
+hay que tener en cuenta que el casteo en números cambia el tipo entre estos mientras que el casteo de objetos solo cambia la referencia a un objeto, no el objeto en si mismo.
+
+float egg = 2.0 / 9; // no compila proque el resultado DOUBLE no se puede asignar a un FLOAT directamente.
+
+int tadpole = (int)5 * 2L; // no compila porque el casting se aplica al 5 y el resultado de la operación va ser un double.
+
+short frog = 3 - 2.0; // no compila porque el resultado es un DOUBLE
+
+short a = 10;
+short b = 3;
+short c = a * b; // no compila porque se vuelve los short se vuelven int por defecto al operarse y despues no se puede guadar en un short si no se castea.
+
+
+
+
+
+
 
 
