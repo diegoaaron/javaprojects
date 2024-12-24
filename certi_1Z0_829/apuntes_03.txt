@@ -98,6 +98,133 @@ Tener en cuenta que no es obligatorio tener casos dentro de una sentencia switch
 
 switch(month){} // compilara
 
-utilizando la sentencia "BREAK";
+utilizando la sentencia "BREAK"; podemos saltar als ejecuciones restantes despues de haber ejecutado la sentencia asociado a la primera ubivación del CASE
+
+por ejemplo en el siguiente codigo:
+
+public void printSeason(int month) {
+		switch (month) {
+		case 1, 2, 3: System.out.print("Winter");
+		case 4, 5, 6: System.out.print("Spring");
+		default: System.out.print("Unknown");
+		case 7, 8, 9: System.out.print("Summer");
+		case 10, 11, 12: System.out.print("Fall");
+		}
+	}
+
+Capitulo1 a1 = new Capitulo1();
+a1.printSeason(5);
+
+se termina imprimiendo: SpringUnknownSummerFall
+
+las sentencias SWITCH soportan los datos de tipo:
+- int y Integer
+- byte y Byte
+- short y Short
+- char y Character
+- String
+- enum // son un grupo de constantes como los días de la semana o meses del año
+- var (si el tipo fue resuelto previamente)
+
+los valores aceptados para los CASES deben tener en cuenta; Primero, los valores en cada sentencia case deben ser constantes conocidas en tiempo de compilación y del mismo tipo de dato que el "valor" del switch. Esto significa que solo puedes usar literales, constantes de enumeraciones (enum) o variables constantes "final" del mismo tipo de dato. Por ejemplo:
+
+final int getCookies() { return 4; }
+void feedAnimals() {
+    final int bananas = 1;
+    int apples = 2;
+    int numberOfAnimals = 3;
+    final int cookies = getCookies();
+    switch(numberOfAnimals) {
+        case bananas:       // COMPILA, por utilizar FINAL
+        case apples:        // NO COMPILA,  por no usar FINAL
+        case getCookies():  // NO COMPILA, por usar un metodo que se ejecuta en tiempo de ejecucion
+        case cookies: // NO COMPILA, por usar un metodo que se ejecuta en tiempo de ejecucion
+        case 3 * 5:  // COMPILA, porque el valor se determina en tiempo de compilación.
+    }
+}
+
+las expresiones SWICH:
+las expresiones switch. Estas expresiones ofrecen una forma más concisa y expresiva de escribir código condicional en comparación con las tradicionales instrucciones switch (imagen04). teniendo en cuenta que puede haber casos en los que esta nueva estructura requiera si o si una rama default
+
+aqui un ejemplo:
+
+String dayOfWeek = switch (day) {
+    case 1 -> "Lunes";
+    case 2 -> "Martes";
+    case 3, 4, 5 -> "Día laborable";
+    case 6, 7 -> "Fin de semana";
+    default -> "Día inválido";
+};
+
+System.out.println(dayOfWeek);
+
+Todas las ramas de una expresión switch que no lancen una excepción deben devolver un tipo de dato consistente (si la expresión switch devuelve un valor). Esto significa que si una expresión switch está diseñada para devolver un valor, todas las ramas que no terminen en una excepción deben devolver un valor del mismo tipo.
+
+Si la expresión switch devuelve un valor, entonces cada rama que no sea una expresión debe usar la palabra clave yield para devolver un valor. La palabra clave yield se utiliza en las expresiones switch para especificar el valor que se devuelve desde una rama en particular.
+
+Se requiere una rama default a menos que se cubran todos los casos o que no se devuelva ningún valor. Esto significa que si hay valores posibles para la expresión switch que no están cubiertos por ninguna rama case, se debe incluir una rama default para manejar esos casos.
+
+en el siguiente ejemplo no compila porque los 3 ultimos valores devuelen un tipo que no es compatible con el resultado que se espera.
+
+int a1 = 10;
+int size switch(a1) {
+ case 5 -> 1;
+ case 10 -> (short)2;
+ default -> 5;
+ case 20 -> "3"; // no compila
+ case 40 -> 4L; // no compila
+ case 50 -> null; // no compila
+}
+
+
+Una expresión switch admite tanto una expresión como un bloque en las ramas case y default. Al igual que un bloque regular, un bloque case está encerrado entre llaves ({ }). También incluye una instrucción yield si la expresión switch devuelve un valor. Por ejemplo, el siguiente código utiliza una mezcla de expresiones case y bloques:
+
+int fish = 5;
+int length = 12;
+var name = switch(fish) {
+    case 1 -> "Goldfish";
+    case 2 -> { yield "Trout"; }
+    case 3 -> {
+        if (length > 10) yield "Blobfish";
+        else yield "Green";
+    }
+};
+
+yield: Se utiliza dentro de un bloque para especificar el valor que se devuelve desde ese caso. Es como una versión de return para las expresiones switch.
+
+int fish = 5;
+int length = 12;
+var name = switch(fish) {
+ case 1 -> "Goldfish";
+ case 2 -> {} // no compila por no utilizar YIELD
+ case 3 -> {
+ if(length > 10) yield "BLod";
+ } // no compila porque no hay un yield por defecto
+}
+
+por ultimo la tercera condicion de la expresion switch que indica que todas las posibilidades deban cubrise se evidencia en el siguiete ejemplo:
+
+String type = switch(canis){
+ case 1 -> "dog";
+ case 2 -> "wolf";
+ case 3 -> "coyote";
+}; // no compila ya que no se condiera los caso 5, 4, -1, etc ya que estos van a devolver NULL lo cual no es aceptado por Java
+
+las posibles soluciones para estos casos son:
+
+Primera solución (más común): Esta solución se refiere a utilizar la expresión DEFAULT.
+
+Segunda solución: Esta solución es más específica para enums, que son tipos de datos que representan un conjunto fijo de constantes. Se utiliza cuando queremos evaluar el valor de un enum y realizar acciones diferentes según el valor.
+
+enum Season {WINTER, SPRING, SUMMER, FALL}
+
+String getWeather(Season value) {
+    return switch(value) {
+        case WINTER -> "Cold",
+        case SPRING -> "Rainy",
+        case SUMMER -> "Hot",
+        case FALL -> "Warm"
+    };
+}
 
 
