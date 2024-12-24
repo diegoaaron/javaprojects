@@ -1,0 +1,103 @@
+la sentencia IF
+
+Solo recuerda que el objetivo de una instrucción de toma de decisiones puede ser una sola instrucción o un bloque de instrucciones.
+
+// setencia de una sola linea cuando solo hay una ejecución despues del IF
+if (a > b)
+ a++;
+
+// sentencia de multiples lineas, cuando queremos hacer mas de una sentencia
+if (a > 3){
+ a++;
+}
+
+imagen01 -> muestra la estructura de un IF
+
+la sentencia IF-ELSE es utilizada para evitar tener que hacer 2 IF
+
+imagen02 -> estructura de una IF-ELSE
+
+el siguiente ejemplo es aceptable:
+
+if(hora < 11){
+ System.out.println("adios");
+} else System.out.println("hola");
+
+
+Java 16 introdujo oficialmente la coincidencia de patrones con las instrucciones if y el operador instanceof.
+
+La coincidencia de patrones es una nueva herramienta que te permite reducir el código repetitivo en tu programa. Este tipo de código, al que llamamos 'boilerplate', suele duplicarse una y otra vez de forma similar en diferentes partes del código. Muchas de las mejoras recientes en Java se centran en disminuir este código repetitivo. tengamos como referencia el siguiente codigo:
+
+void compararEnteros(Number number) {
+    if (number instanceof Integer) {
+        Integer data = (Integer) number;
+        System.out.println(data.compareTo(5));
+    }
+}
+
+Este tipo de código, que primero comprueba el tipo de una variable y luego la convierte a ese tipo, es muy común en Java. Es tan común que los creadores de Java decidieron implementar una sintaxis más corta y es:
+
+void compararEnteros(Number number) {
+    if (number instanceof Integer data) {
+        System.out.println(data.compareTo(5));
+    }
+}
+
+"La variable data en este ejemplo se conoce como variable de patrón. Observa que este código también evita cualquier posible excepción ClassCastException porque la operación de conversión (cast) se ejecuta solo si el operador instanceof implícito devuelve verdadero."
+
+los patrones de variables pueden se utilzados para filtrar data, por ejemplo:
+
+void imprimeMayor(Number number) {
+ if(number instanceof Integer data && data.compareTo(5) > 0)
+  System.out.println(data);
+}
+
+El tipo de la variable de patrón debe ser un subtipo de la variable. Además, no puede ser del mismo tipo. Esta regla no existe para las expresiones del operador instanceof tradicionales. Considera los siguientes dos usos del operador instanceof:
+
+Integer value = 123;
+
+if (value instanceof Integer) {}
+
+if (value instanceof Integer data) {} // NO COMPILA
+
+Mientras que la segunda línea compila, la última no compila porque la coincidencia de patrones requiere que el tipo de la variable de patrón "value" sea un subtipo estricto de Integer. Esto significa que el tipo de la variable de patrón debe ser una subclase más específica de Integer, lo cual no es posible en este caso, ya que Integer es el tipo más específico."
+
+Alcance de flujo:
+
+El compilador aplica el alcance del flujo cuando trabaja con la coincidencia de patrones. El alcance del flujo significa que la variable solo está dentro del alcance cuando el compilador puede determinar definitivamente su tipo.
+
+void printIntegersOrNumbersGreaterThan5(Number number) {
+    if (number instanceof Integer data || data.compareTo(5) > 0)
+        System.out.print(data);
+}
+
+El problema radica en que la variable "data" solo está definida si la condición number instanceof Integer es verdadera. Si number no es un Integer, "data" no existe y tratar de usarla en la segunda parte de la condición (|| data.compareTo(5) > 0) causará un error de compilación. El compilador no puede garantizar que "data" tenga un valor válido en todos los casos, por lo que la considera fuera de alcance y no compila el código.
+
+por otra parte el siguiente ejemplo compila:
+
+void printOnlyIntegers(Number number) {
+    if (!(number instanceof Integer data))
+        return;
+    System.out.print(data.intValue());
+}
+
+esto porque si la condicion se cumple el codigo debe irse a la ultima linea de codigo para finalizar la función y para ello se debe asegurar la penultima linea. esto proboca que si el IF no se cumple la penultima linea si se ejecute.
+
+la sentencia SWITCH:
+
+como se ve en la estructura (imagen03) este tipo de sentencia entra en la primera coindicencia que se encuentre y de no haber ejecuta la sentencia "default"
+
+a partir de Java 14 se puede conbinar casos con una coma;
+
+switch (animal){
+ case 1, 2: System.out.println("hola");
+ case 3: System.out.println("adios");
+}
+
+Tener en cuenta que no es obligatorio tener casos dentro de una sentencia switch, por ejemplo:
+
+switch(month){} // compilara
+
+utilizando la sentencia "BREAK";
+
+
