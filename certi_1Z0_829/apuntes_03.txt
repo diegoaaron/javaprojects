@@ -227,4 +227,155 @@ String getWeather(Season value) {
     };
 }
 
+Loops en Java, se realizan a través de la sentencia WHILE (imagen05), durante la ejecucion se debe aumentar el contador de la condición
+
+DO-WHILE es un tipo de sentencia loop que permite una primera ejecución de código (imagen06)
+
+el FOR-LOOP es un tipo de loop que permite ejecutarse para una cantidad especifica de repeticiones (imagen07)
+
+for (int i = 0; i < 10; i++) {
+			System.out.println("a" + i); // en estos loops la primera impresion sera a0, no a1 ya que despues de imprmir recien ejecuta el incremento en "i"
+}
+
+algunos casos comunes de loop para el examen son:
+
+- LOOP infinito
+for(;;)
+ System.out.println("hola mundo"); // esto si compilara
+
+- agregando multiples parametros al FOR (si compila)
+int x = 0;
+for(long y = 0, z = 4; x < 5 && y < 10; x++, y++){
+ System.out.println(y + "");
+}
+System.out.println(x + "");
+
+- redefiniendo una variable en el bloque inicial
+
+int x = 0;
+for (int x = 4; x < 5; x++){
+ System.out.println("hola mundo"); // no compila porque la varible ya fue declarada
+}
+
+- utilizando tipos de dato incompatibles
+
+int x = 0;
+for (long y = 0, int z = 4, x < 5; x++){ // no compila porque todas las variables en el bloque de iniciacion deben ser del mismo tipo
+ System.out.println(y + "");
+}
+
+- utilizando variables del loop fuera de el
+
+for (long y = 0, x = 4; x < 5 && y < 10; x++, y++)
+ System.out.println(y + "");
+System.out.println(x); // no compila porque se usa una variable que solo vive en el loop.
+
+el FOR-EACH LOOP (imagen08) es un loop especializado en recorrer Arrays y otras clases de tipo Collection.
+
+La declaración de un bucle for-each se compone de una sección de inicialización y un objeto sobre el que iterar. El lado derecho del bucle for-each debe ser uno de los siguientes:
+- Un arreglo de Java integrado.
+- Un objeto cuyo tipo implemente java.lang.Iterable (o extienda de la interfaz Collection)
+
+El lado izquierdo debe incluir una declaración para una instancia de una variable cuyo tipo sea compatible con el tipo del arreglo o colección en el lado derecho de la declaración.
+
+public void printNames(String[] names) {
+    for(int counter = 0; counter < names.length; counter++) {
+        System.out.println(names[counter]);
+    }
+}
+
+public void printNames(String[] names) {
+    for(var name : names) {
+        System.out.println(name);
+    }
+}
+
+buqles anidados: Un bucle anidado es un bucle que contiene otro bucle, incluyendo bucles while, do/while, for y for-each. Por ejemplo, considera el siguiente código que itera sobre un arreglo bidimensional, que es un arreglo que contiene otros arreglos como sus miembros.
+
+int[][] myComplexArray = {{5,2,1,3},{3,9,8,9},{5,7,12,7}};
+for(int[] mySimpleArray: myComplexArray) {
+    for(int i=0; i<mySimpleArray.length; i++) {
+        System.out.print(mySimpleArray[i]+"\t");
+    }
+    System.out.println();
+}
+
+obteniendo el siguiente resultado:
+
+5 2 1 3
+3 9 8 9
+5 7 12 7
+
+ETIQUETAS OPCIONALES
+
+Una cosa que intencionalmente omitimos cuando presentamos las sentencias if, switch y los bucles es que todos ellos pueden tener etiquetas opcionales. Una etiqueta es un puntero opcional al inicio de una sentencia que permite que el flujo de la aplicación salte a ella o se rompa desde ella. Es un único identificador seguido de dos puntos (:). Por ejemplo, podemos agregar etiquetas opcionales a uno de los ejemplos anteriores:
+
+
+int[][] myComplexArray = {{5,2,1,3},{3,9,8,9},{5,7,12,7}};
+
+OUTER_LOOP: for(int[] mySimpleArray : myComplexArray) {
+
+    INNER_LOOP: for(int i=0; i<mySimpleArray.length; i++) {
+        System.out.print(mySimpleArray[i]+"\t");
+    }
+
+    System.out.println();
+}
+
+Las etiquetas siguen las mismas reglas de formato que los identificadores. Para una mejor legibilidad, comúnmente se expresan en mayúsculas con snake_case, utilizando guiones bajos entre palabras. Cuando se trabaja con un solo bucle, las etiquetas no añaden ningún valor, pero como verás en la siguiente sección, son extremadamente útiles en estructuras anidadas.
+
+
+Sentencia BREAK: Como viste al trabajar con sentencias switch, una sentencia break transfiere el flujo de control hacia fuera de la sentencia que lo encierra. Lo mismo ocurre con una sentencia break que aparece dentro de un bucle while, do/while o for, ya que terminará el bucle antes de tiempo (imagen09)
+
+El parámetro de etiqueta opcional nos permite salir de un bucle externo de nivel superior. En el siguiente ejemplo, buscamos la primera posición de índice (x, y) de un número dentro de un arreglo bidimensional no ordenado
+
+public class FindInMatrix {
+    public static void main(String[] args) {
+        int[][] list = {{1, 13}, {5, 2}, {2, 2}};
+
+        int searchValue = 2;
+        int positionX = -1;
+        int positionY = -1;
+
+        PARENT_LOOP: for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                if (list[i][j] == searchValue) {
+                    positionX = i;
+                    positionY = j;
+                    break PARENT_LOOP; // esta sentencia rompe tanto el bucle interno como el externo, terminando la búsqueda.
+                }
+            }
+        }
+
+        if (positionX == -1 || positionY == -1) {
+            System.out.println("Value " + searchValue + " not found");
+        } else {
+            System.out.println("Value " + searchValue + " found at: (" + positionX + "," + positionY + ")");
+        }
+    }
+}
+
+si remplazamos el bucle interno por lo siguiente:
+
+if (list[i][j] == searchValue) {
+    positionX = i;
+    positionY = j;
+    break;
+}
+
+El programa solo saldría del bucle interno actual, y continuaría buscando en las siguientes filas del arreglo, incluso si ya encontró el valor.
+
+obtenemos: Value 2 found at: (2, 0)
+
+y si removemos la sentencia BREAK
+
+if (list[i][j] == searchValue) {
+    positionX = i;
+    positionY = j;
+}
+
+obtenemos: Value 2 found at: (2, 1)
+
+sentencia CONTINUE:
+
 
