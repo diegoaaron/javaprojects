@@ -376,6 +376,88 @@ if (list[i][j] == searchValue) {
 
 obtenemos: Value 2 found at: (2, 1)
 
-sentencia CONTINUE:
+sentencia CONTINUE: La sentencia continue te permite controlar el flujo de ejecución dentro de un bucle, permitiendo saltar a la siguiente iteración sin ejecutar el resto del código de la iteración actual. Esto es útil cuando quieres omitir ciertas partes del bucle en función de determinadas condiciones (imagen10)
 
+for (int i = 0; i < 10; i++) {
+    if (i % 2 == 0) {
+        continue; // Salta a la siguiente iteración si i es par
+    }
+    System.out.println(i);
+}
+
+Este código imprimirá solo los números impares del 0 al 9, ya que cuando i es par, la sentencia continue salta a la siguiente iteración.
+
+La sentencia continue se aplica al bucle interno más cercano que está en ejecución. Sin embargo, podemos usar etiquetas opcionales para anular este comportamiento.
+
+public class CleaningSchedule {
+    public static void main(String[] args) {
+        for (char stables = 'a'; stables <= 'd'; stables++) {
+            CLEANING: for (int leopard = 1; leopard <= 2; leopard++) {
+                if (stables == 'b' || leopard == 2) {
+                    continue CLEANING; // Salta al siguiente establo o leopardo
+                }
+                System.out.println("Cleaning: " + stables + "," + leopard);
+            }
+        }
+    }
+}
+
+Salida: El programa imprimirá:
+Cleaning: a,1
+Cleaning: c,1
+Cleaning: d,1
+
+pero si solo dejamos CONTINUE (eliminamos CLEANING)  obtendremos:
+
+Salida: El programa imprimirá:
+Cleaning: a,1
+Cleaning: a,3
+Cleaning: c,1
+Cleaning: c,3
+Cleaning: d,1
+Cleaning: d,3
+
+Y si removemos el CONTINUE y las sentencias IF obtendriamos
+
+Cleaning: a,1
+Cleaning: a,2
+Cleaning: a,3
+Cleaning: b,1
+Cleaning: b,2
+Cleaning: b,3
+Cleaning: c,1
+Cleaning: c,2
+Cleaning: c,3
+Cleaning: d,1
+Cleaning: d,2
+Cleaning: d,3
+
+La sentencia RETURN
+
+public class FindInMatrixUsingReturn {
+    private static int[] searchForValue(int[][] list, int v) {
+        for (int i = 0; i < list.length; i++) {
+            for (int j = 0; j < list[i].length; j++) {
+                if (list[i][j] == v) {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        int[][] list = {{1, 13}, {5, 2}, {2, 2}};
+        int searchValue = 2;
+
+        int[] results = searchForValue(list, searchValue);
+
+        if (results == null) {
+            System.out.println("Value " + searchValue + " not found");
+        } else {
+            System.out.println("Value " + searchValue + " found at: (" +
+                    results[0] + "," + results[1] + ")");
+        }
+    }
+}
 
