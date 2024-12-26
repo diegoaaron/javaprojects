@@ -1,1 +1,70 @@
- 
+Para declarar una cadena podemos hacerlo con:
+String name = "Fluffy";
+String name = new String("Fluffy");
+string name = """
+    Fluffy""";
+
+Al ser un string una secuencia de caracteres este es una implementación de la interfaz CharSequence.
+
+concatenacion: consiste en la unión de cadenas y tiene las siguientes reglas:
+- si ambos operadores son numericos "+" significa adicion
+- si ambos operadores son cadenas "+" significa concatenacion
+- las expresiones se evaluan de izquierda a derecha
+
+System.out.println(1 + 2); //3
+System.out.println("a" + "b"); //ab
+System.out.println("a" + "b" + 3); //ab3
+System.out.println(1 + 2 + "c"); //3c
+System.out.println("c" + 1 + 2); //c12
+System.out.println("c" + null); //cnull
+
+
+int a1 = 3;
+String a2  = "4";
+System.out.println(1 + 2 + a1 + a2); //64
+
+var s = "1"; // s = "1"
+s += "2"; // s = "12"
+s += 3; // s = "123"
+
+Debemos tener en claro que String tiene muchos metodos y que Java lo considera una secuencia de caracteres y a su vez es inmutable, esto significa que no puede ser modificado despues de creado por lo cual el uso de cualquier metodo creara un nuevo objeto String con el resultado.
+
+calculando el tamaño de la adena on "length()"
+
+var name = "animals";
+System.out.println(name.length()); //7
+
+obteniendo un unico caracter con "charAt()"
+
+var name = "animals";
+System.out.println(name.charAt(0)); //a
+
+cuando se pasa un indice que no existe en la cadena este devuelve una excepcion
+
+encontrando un indice con "indexOf()", este busca el primer indice que coincida con el caracter o cadena indicada. ya que un char puede ser pasado como un numero tambien podemos ver este tipo de parametros pero en el examen siempre lo asocian con un parametro denominado "ch". los posibles parametros de este metodo son:
+
+public int indexOf(int ch)
+public int indexOf(int ch, int fromIndex)
+public int indexOf(String str)
+public int indexOf(String str, int fromIndex)
+
+ejemplo:
+
+var name = "animals";
+
+System.out.println(name.indexOf('a')); // 0
+System.out.println(name.indexOf('al')); // 4
+System.out.println(name.indexOf('a',4)); // 4
+System.out.println(name.indexOf('al',5)); // -1
+
+obteniendo una subcadena con el metodo "substring()" en el cual marcamos hasta donde extraeremos la cadena sin contar la posicion final. se puede indicar el parametro inicial o final o solo el final.
+
+public int substring(inicio, final)
+
+var name = "animals";
+System.out.println(name.substring(3));   // mals
+System.out.println(name.substring(name.indexOf('m'))); // mals
+System.out.println(name.substring(3, 4));  // m
+System.out.println(name.substring(3, 7));  // mals
+
+
