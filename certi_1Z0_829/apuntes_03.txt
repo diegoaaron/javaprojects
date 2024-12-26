@@ -432,7 +432,7 @@ Cleaning: d,1
 Cleaning: d,2
 Cleaning: d,3
 
-La sentencia RETURN
+La sentencia RETURN: en el siguiente ejemplo podremos ver como la sentencia RETURN funciona como una mejor alternativa a las etiquetas y break
 
 public class FindInMatrixUsingReturn {
     private static int[] searchForValue(int[][] list, int v) {
@@ -460,4 +460,36 @@ public class FindInMatrixUsingReturn {
         }
     }
 }
+
+codigo inalcanzable: Un aspecto de "break", "continue" y "return" a tener en cuenta es que cualquier código colocado inmediatamente después de ellos en el mismo bloque se considera inalcanzable y no se compilará. Por ejemplo:
+
+int checkDate = 0;
+while (checkDate < 10) {
+    checkDate++;
+    if (checkDate > 100) {
+        break;
+        checkDate++; // no se compilar por considerarse codigo inalcanzable
+    }
+}
+
+
+int minute = 1;
+WATCH: while (minute > 2) {
+    if (minute++ > 2) {
+        continue WATCH;
+        System.out.print(minute); // no se compilar por considerarse codigo inalcanzable
+    }
+}
+
+
+int hour = 2;
+switch (hour) {
+    case 1: return; hour++; // no se compilar por considerarse codigo inalcanzable
+    case 2:
+}
+
+imagen11 -> resumen de los tipos de loops y el soporte que tienen par etiquetas, break, continue e yield.
+
+
+
 
