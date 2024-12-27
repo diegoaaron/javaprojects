@@ -559,5 +559,174 @@ int ids[], types;
 
 La primera se llama ids[]. Esta es un arreglo de int, llamada ids. La segunda es solo llamada types. No tiene corchetes, así que es un entero regular
 
+Creando un Arreglo con Variables de Referencia
 
+Puedes elegir cualquier tipo de Java para ser el tipo del arreglo. Esto incluye clases que tú mismo crees. Vamos a ver un ejemplo con el tipo de dato predefinido String:
+
+
+String[] bugs = {"cricket", "beetle", "ladybug"};
+String[] alias = bugs;
+
+System.out.println(bugs.equals(alias)); // true
+System.out.println(bugs.toString()); // [Ljava.lang.String;@160bc7c0
+
+public class Names {
+    String[] names = new String[2];
+}
+
+Es un arreglo porque tiene corchetes.
+
+Es un arreglo de tipo String ya que esa es el tipo mencionado en la declaración.
+
+Tiene dos elementos porque la longitud es 2, pero esos dos espacios actualmente son null pero tienen el potencial de apuntar a un objeto String.
+
+3| String[] strings = {"stringValue"};
+4| Object[] objects = strings;
+5| String[] againStrings = (String[]) objects;
+6| againStrings[0] = new StringBuilder(); // ¡NO COMPILA!
+7| objects[0] = new StringBuilder(); // ¡Cuidado!
+
+- La línea 3 crea un arreglo de tipo String.
+- La línea 4 no requiere un cast porque Object es un tipo más amplio que String.
+- En la línea 5, se necesita un cast porque estamos moviéndonos a un tipo específico.
+- La línea 6 no compila porque String[] solo permite objetos String y StringBuilder no es un String.
+- La línea 7 es donde se pone interesante. Desde el punto de vista del compilador, esto está bien. Un objeto StringBuilder claramente puede ir en un Object[]. El problema es que no tenemos actualmente un Object[]. Tenemos un String[] referido desde una variable Object. Al runtime, el código arrojará una ArrayStoreException.
+
+Usando un Arreglo
+
+4| String[] mammals = {"monkey", "chimp", "donkey"};
+5| System.out.println(mammals.length); // 3
+6| System.out.println(mammals[0]); // monkey
+7| System.out.println(mammals[1]); // chimp
+8| System.out.println(mammals[2]); // donkey
+
+La línea 4 declara e inicializa el arreglo.
+La línea 5 nos dice cuántos elementos puede contener el arreglo.
+El resto del código imprime el arreglo.
+Nota que los elementos están indexados comenzando con 0. Esto debería ser familiar de String y StringBuilder, que también comienzan a contar con 0.
+
+length como el número de elementos: Después de length no hay paréntesis porque no es un método, es un atributo.
+
+String[] mammals = {"monkey", "chimp", "donkey"};
+System.out.println(mammals.length); // Imprime 3
+
+var birds = new String[6];
+System.out.println(birds.length);
+
+La respuesta es 6. Aunque los seis elementos del arreglo son null, todavía hay seis de ellos. El atributo length no considera lo que hay en el arreglo; solo considera cuántos slots han sido asignados.
+
+Es muy común usar un loop cuando lees o escribes en un arreglo. Este loop asigna a cada elemento de numbers un valor cinco más grande que el índice actual:
+
+var numbers = new int[10];
+for (int i = 0; i < numbers.length; i++) {
+    numbers[i] = i + 5;
+}
+
+El primero está intentando ver si sabes que los índices empiezan con 0. Ya que tenemos 10 elementos en nuestro arreglo, esto significa que solo numbers[0] hasta numbers[9] son válidos.
+
+Ordenando Arreglos:
+
+Al igual que StringBuilder te permitía pasar casi cualquier cosa a append(), puedes pasar casi cualquier arreglo a Arrays.sort().
+
+Para usar Arrays, necesitas importar. Tienes dos opciones:
+
+import java.util.*; // Importa todo el paquete, incluyendo Arrays
+import java.util.Arrays; // Importa solo Arrays
+
+Hay una excepción, aunque no suele aparecer mucho en los exámenes. Puedes escribir java.util.Arrays cada vez que lo uses en la clase en lugar de especificarlo como una importación.
+
+int[] numbers = {6, 9, 1};
+Arrays.sort(numbers);
+for (int i = 0; i < numbers.length; i++) {
+    System.out.print(numbers[i] + " ");
+}
+
+El resultado es 1 6 9, como esperarías. Nota que si hubiéramos iterado directamente sobre el arreglo para imprimir los valores, obtendríamos el molesto hash de [I@2bd9c3e7. Alternativamente, podríamos haber usado Arrays.toString(numbers) en lugar del loop. Eso habría impreso [1, 6, 9].
+
+String[] strings = {"10", "9", "100"};
+Arrays.sort(strings);
+for (String s : strings) {
+    System.out.print(s + " ");
+}
+
+El resultado podría no ser el que esperas. Esto imprime 10 100 9. El problema es que los String se ordenan alfabéticamente, y los números van antes de las letras, y las mayúsculas antes de las minúsculas. En el Capítulo 9, "Colecciones y Genéricos", aprenderás a crear órdenes de clasificación personalizados usando algo llamado un comparador.
+
+Búsqueda en Arreglos Ordenados: Búsqueda Binaria
+
+Java también proporciona una forma conveniente de buscar elementos en un arreglo, pero solo si el arreglo ya está ordenado. La Tabla 4.3 resume las reglas para la búsqueda binaria.
+
+
+
+Escenario	                                         Resultado
+Elemento objetivo encontrado en arreglo ordenado	 Índice de la coincidencia
+Elemento objetivo no encontrado en arreglo ordenado	 Valor negativo que muestra uno menos que el negativo del índice donde debería insertarse un elemento para preservar el orden ordenado
+Arreglo no ordenado	                                  Resultado indefinido
+
+int[] numbers = {2, 4, 6, 8};
+System.out.println(Arrays.binarySearch(numbers, 2)); // 0
+System.out.println(Arrays.binarySearch(numbers, 4)); // 1
+System.out.println(Arrays.binarySearch(numbers, 1)); // -1
+
+Línea 3: Crea un arreglo ordenado de números.
+Líneas 4-6: Usan Arrays.binarySearch para buscar diferentes números en el arreglo.
+Línea 4: Encuentra el número 2 en el índice 0.
+Línea 5: Encuentra el número 4 en el índice 1.
+Línea 6: El número 1 no está en el arreglo, por lo que devuelve -1, indicando que debería insertarse en el índice 0 para mantener el orden.
+
+Usando compare()
+
+Primero, necesitas saber qué significa el valor de retorno. No necesitas conocer los valores exactos de retorno, pero debes saber lo siguiente:
+
+Un número negativo significa que el primer arreglo es más pequeño que el segundo.
+Un cero significa que los arreglos son iguales.
+Un número positivo significa que el primer arreglo es más grande que el segundo.
+
+System.out.println(Arrays.compare(new int[] {1}, new int[] {2}));
+
+Este código imprime un número negativo. Debería ser bastante intuitivo que 1 es más pequeño que 2, haciendo que el primer arreglo sea más pequeño.
+
+Ahora que sabes cómo comparar un solo valor, veamos cómo comparar arreglos de diferentes longitudes:
+
+- Si ambos arreglos tienen la misma longitud y los mismos valores en cada posición, se devuelve cero.
+
+- Si todos los elementos son los mismos pero el segundo arreglo tiene elementos adicionales al final, se devuelve un número negativo.
+
+- Si todos los elementos son los mismos, pero el primer arreglo tiene elementos adicionales al final, se devuelve un número positivo.
+
+- Si el primer elemento que difiere es más pequeño en el primer arreglo, se devuelve un número negativo.
+
+- Si el primer elemento que difiere es más grande en el primer arreglo, se devuelve un número positivo.
+
+Estas son algunas reglas adicionales que se aplican no solo al método compare() que hemos visto, sino también al método compareTo(), que se introduce en el Capítulo 8 sobre Lambdas e Interfaces Funcionales:
+
+- null es menor que cualquier otro valor: Si comparas cualquier objeto con null, null siempre se considerará menor.
+
+- Para números, se aplica el orden numérico normal: Los números se comparan de la manera que esperarías: 1 es menor que 2, -5 es menor que 3, etc.
+Para cadenas, una es menor si es prefijo de otra: Por ejemplo, "casa" es menor que "castillo" porque "casa" es un prefijo de "castillo".
+
+Para cadenas o caracteres, los números son menores que las letras: Si comparas un número con una letra, el número siempre será considerado menor. Por ejemplo, "1" es menor que "a".
+
+Para cadenas o caracteres, las mayúsculas son menores que las minúsculas: En el orden alfabético, las letras mayúsculas preceden a las minúsculas. Por ejemplo, "A" es menor que "a".
+
+imagen03 -> ejemos de arrays.compare()
+
+Usando Mismatch()
+
+Ahora que estás familiarizado con compare(), es hora de aprender sobre mismatch(). Si los arreglos son iguales, mismatch() devuelve -1. De lo contrario, devuelve el primer índice en el que difieren.
+
+System.out.println(Arrays.mismatch(new int[] {1}, new int[] {1}));
+System.out.println(Arrays.mismatch(new String[] {"a"}, "a"));
+
+- mismatch(): Este método se utiliza para comparar dos arreglos y encontrar el primer índice en el que los elementos de ambos arreglos son diferentes.
+
+- Retorno de -1: Si los dos arreglos son exactamente iguales (mismos elementos en el mismo orden), mismatch() devuelve -1.
+
+- Retorno del índice: Si los arreglos son diferentes, devuelve el índice del primer elemento donde se encuentra la diferencia.
+
+new String[] {"A"}); // Este fragmento de código parece estar incompleto. Debería haber otro arreglo para comparar.
+System.out.println(Arrays.mismatch(new int[] {1, 2}, new int[] {1}));
+
+- new String[] {"A"} por sí solo no realiza ninguna comparación. Necesitarías otro arreglo para comparar con este.
+
+- Por ejemplo, Arrays.mismatch(new String[] {"A"}, new String[] {"B"}) compararía las cadenas "A" y "B" y devolvería 0, ya que la diferencia se encuentra en el primer índice.
 
