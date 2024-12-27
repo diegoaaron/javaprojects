@@ -854,3 +854,72 @@ Como es un número aleatorio, no podemos saber el resultado por adelantado. Sin 
 
 NOTA: Aunque no está en el examen, es común usar la clase Random para generar números pseudo-aleatorios. Permite generar números de diferentes tipos.
 
+Trabajando con Fechas y Tiempos
+
+Java proporciona varias APIs para trabajar con fechas y tiempos. Existe una clase antigua java.util.Date, pero no está en el examen. Necesitas importar para usar las clases modernas de fecha y tiempo:
+
+import java.time.*; // importar clases de tiempo
+
+Día vs. Fecha
+En inglés americano, "date" representa dos conceptos: la combinación mes/día/año cuando algo ocurrió (como 1 de enero de 2000) o el día del mes (como "Hoy es día 6"). Las palabras "day" y "date" se usan como sinónimos. Ten cuidado con esto en el examen.
+
+Creando Fechas y Tiempos
+
+En el mundo real, hablamos de fechas y zonas horarias asumiendo que la otra persona está cerca. Por ejemplo, "Te llamaré a las 11:00 el martes" significa lo mismo para ambos si estamos en la misma zona. Pero si estoy en Nueva York y tú en California, debemos ser más específicos debido a la diferencia de 3 horas. Dirías "Te llamaré a las 11:00 EST el martes".
+
+Al trabajar con fechas y tiempos, decide primero cuánta información necesitas. El examen da cuatro opciones:
+
+- LocalDate: Solo fecha, sin hora ni zona horaria. Ejemplo: tu cumpleaños este año.
+- LocalTime: Solo hora, sin fecha ni zona horaria. Ejemplo: medianoche.
+- LocalDateTime: Fecha y hora, sin zona horaria. Ejemplo: "medianoche de Año Nuevo".
+- ZonedDateTime: Fecha, hora y zona horaria. Ejemplo: "conferencia a las 9:00 a.m. EST".
+
+Se obtienen instancias usando un método estático:
+```java
+System.out.println(LocalDate.now());
+System.out.println(LocalTime.now());
+System.out.println(LocalDateTime.now());
+System.out.println(ZonedDateTime.now());
+```
+
+Cada clase tiene un método now() que da la fecha/hora actual. La salida dependerá del momento y lugar. En Estados Unidos, el 25 de octubre a las 9:13 a.m. mostraría:
+
+2021-10-25
+09:13:07.768
+2021-10-25T09:13:07.768
+2021-10-25T09:13:07.769-05:00[America/New_York]
+
+La salida varía según el tipo de información. Muestra solo fecha, solo hora, ambas (separadas por T), o todo incluyendo zona horaria y offset GMT.
+
+creando fechas en java
+
+Veamos cómo crear fechas y horas en Java 17. Para empezar, crearemos solo una fecha sin hora. Ambas formas de crear la fecha son válidas:
+
+public static LocalDate of(int year, int month, int dayOfMonth)
+public static LocalDate of(int year, Month month, int dayOfMonth)
+
+En ambos casos, se proporciona el año, el mes y el día. Aunque es recomendable utilizar las constantes de Month (para hacer el código más legible), puedes pasar el número del mes directamente.
+
+var date1 = LocalDate.of(2022, Month.JANUARY, 20);
+var date2 = LocalDate.of(2022, 1, 20);
+
+Al crear un objeto de tiempo en Java, tienes la flexibilidad de especificar el nivel de detalle que desees. Puedes incluir solo la hora y los minutos, o agregar segundos e incluso nanosegundos para una precisión extrema (un nanosegundo es una milmillonésima parte de un segundo, aunque en la mayoría de los casos no es necesario ser tan preciso).
+
+var time1 = LocalTime.of(6, 15);  // Hora y minutos
+var time2 = LocalTime.of(6, 15, 30); // Hora, minutos y segundos
+var time3 = LocalTime.of(6, 15, 30, 200); // Hora, minutos, segundos y nanosegundos
+
+Estos tres objetos LocalTime representan diferentes momentos, pero todos están dentro del mismo minuto.
+
+public static LocalTime of(int hour, int minute)
+public static LocalTime of(int hour, int minute, int second)
+public static LocalTime of(int hour, int minute, int second, int nanos)
+
+Puedes combinar una fecha y una hora en un solo objeto LocalDateTime:
+
+var dateTime1 = LocalDateTime.of(2022, Month.JANUARY, 20, 6, 15, 30);
+var dateTime2 = LocalDateTime.of(date1, time1);
+
+En la primera línea, se crea un objeto LocalDateTime especificando directamente todos los componentes de la fecha y la hora. En la segunda línea, se combinan previamente un objeto LocalDate (fecha) y un objeto LocalTime (hora) para crear el mismo LocalDateTime.
+
+
