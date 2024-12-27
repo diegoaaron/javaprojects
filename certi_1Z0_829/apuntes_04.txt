@@ -319,6 +319,245 @@ El examen no siempre hará que el código sea fácil de leer teniendo solo un m�
 7: System.out.println("a=" + a);
 8: System.out.println("b=" + b);
 
-¿Dijiste que ambos imprimen "abcdefg"? Bien. Solo hay un objeto StringBuilder aquí. Sabemos eso porque new StringBuilder() se llama solo una vez. En la línea 5,
+¿Dijiste que ambos imprimen "abcdefg"? Bien. Solo hay un objeto StringBuilder aquí. Sabemos eso porque new StringBuilder() se llama solo una vez. En la línea 5, en la línea 6, ambas variables siguen apuntando al mismo objeto, que ahora tiene un valor de "abcdefg". Asignar el valor de nuevo a 'b' no tiene ningún efecto, ya que 'b' ya está apuntando a ese mismo StringBuilder.
+
+Creación de un StringBuilder
+
+Hay tres formas de construir un StringBuilder:
+
+StringBuilder sb1 = new StringBuilder();
+StringBuilder sb2 = new StringBuilder("animal");
+StringBuilder sb3 = new StringBuilder(10);
+
+El primer ejemplo crea un StringBuilder que contiene una secuencia vacía de caracteres y asigna a sb1 para que lo apunte. El segundo crea un StringBuilder que contiene un valor específico y asigna a sb2 para que lo apunte. Los dos primeros ejemplos permiten que Java gestione los detalles de la implementación. El último ejemplo le indica a Java que tenemos alguna idea de cuál será el valor final y que nos gustaría que el StringBuilder reserve una cierta capacidad, o número de espacios, para caracteres.
+
+Metodos comunes de un StringBuilder:
+
+var sb = new StringBuilder("animals");
+String sub = sb.substring(sb.indexOf("a"), sb.indexOf("al"));
+int len = sb.length();
+char ch = sb.charAt(6);
+System.out.println(sub + " " + len + " " + ch);
+
+
+La respuesta correcta es anim 7 s. El método indexOf() devuelve 0 y 4, respectivamente. El método substring() devuelve la cadena que comienza con el índice 0 y termina justo antes del índice 4.
+
+El método length() devuelve 7 porque ese es el número de caracteres en el StringBuilder, en lugar de un índice. Finalmente, charAt() devuelve el carácter en el índice 6. Aquí comenzamos con 0 porque nos referimos a índices.
+
+Nota que substring() devuelve un String en lugar de un StringBuilder. Por eso sb no se modifica. El método substring() es simplemente un método que consulta el estado del StringBuilder.
+
+Agregar valores (Appending Values):
+
+El método append() es, con mucho, el más utilizado en StringBuilder. De hecho, se usa tan frecuentemente que simplemente comenzamos a usarlo sin comentar al respecto. Afortunadamente, este método hace exactamente lo que parece: agrega el parámetro al StringBuilder y devuelve una referencia al StringBuilder actual. Una de las firmas del método es la siguiente:
+
+public StringBuilder append(String str)
+
+var sb = new StringBuilder().append(1).append('c');
+sb.append("-").append(true);
+System.out.println(sb); // 1c-true
+
+¿Te gusta esta forma de encadenar métodos? El método append() se llama directamente después del constructor. Al contar con todas estas firmas de métodos, puedes simplemente llamar a append() sin necesidad de convertir tu parámetro a un String primero.
+
+Insertar datos (Inserting Data):
+
+El método insert() agrega caracteres al StringBuilder en el índice solicitado y devuelve una referencia al StringBuilder actual. Al igual que append(), existen muchas firmas del método para diferentes tipos. Aquí tienes una:
+
+public StringBuilder insert(int offset, String str)
+
+Presta atención al desplazamiento (offset) en estos ejemplos. Es el índice donde queremos insertar el parámetro solicitado.
+
+var sb = new StringBuilder("animals");
+sb.insert(7, "-");   // sb = animals-
+sb.insert(0, "-");   // sb = -animals-
+sb.insert(4, "-");   // sb = -ani-mals-
+System.out.println(sb);
+
+La línea 4 indica insertar un guion (-) en el índice 7, que resulta ser el final de la secuencia de caracteres. La línea 5 indica insertar un guion en el índice 0, que es el principio de la secuencia. Finalmente, la línea 6 inserta un guion justo antes del índice 4.
+
+Eliminando contenido:
+
+El método delete() es lo opuesto al método insert(). Elimina caracteres de la secuencia y devuelve una referencia al StringBuilder actual. Si solo quieres eliminar un carácter, el método deleteCharAt() es más conveniente. Las firmas de estos métodos son las siguientes:
+
+public StringBuilder delete(int startIndex, int endIndex)
+public StringBuilder deleteCharAt(int index)
+
+El siguiente código muestra cómo usar estos métodos:
+
+var sb = new StringBuilder("abcdef");
+sb.delete(1, 3); // sb = adef
+sb.deleteCharAt(5); // excepción
+
+Primero, eliminamos los caracteres comenzando desde el índice 1 y terminando justo antes del índice 3. Esto nos da "adef". Luego, le pedimos a Java que elimine el carácter en la posición 5. Sin embargo, el valor restante solo tiene cuatro caracteres de longitud, por lo que lanza una excepción StringIndexOutOfBoundsException.
+
+Reemplazando Porciones:
+
+El método replace() funciona de manera diferente para StringBuilder en comparación con String. La firma del método es la siguiente:
+
+public StringBuilder replace(int startIndex, int endIndex, String newString)
+
+var builder = new StringBuilder("pigeon dirty");
+builder.replace(3, 6, "sty");
+System.out.println(builder); // pigsty dirty
+
+Primero, Java elimina los caracteres comenzando desde el índice 3 y terminando justo antes del índice 6. Esto nos da "pig dirty". Luego, Java inserta el valor "sty" en esa posición.
+
+En este ejemplo, el número de caracteres que eliminamos y los que insertamos son iguales. Sin embargo, no hay ninguna razón obligatoria para que esto sea así. ¿Qué crees que hace este código?
+
+var builder = new StringBuilder("pigeon dirty");
+builder.replace(3, 100, "");
+System.out.println(builder);
+
+Imprime "pig". Recuerda, el método realiza primero una eliminación lógica. El método replace() permite especificar un segundo parámetro que excede el final del StringBuilder.
+
+Invertir (Reversing):
+
+Después de todo esto, es hora de un método fácil. El método reverse() hace exactamente lo que parece: invierte los caracteres en la secuencia y devuelve una referencia al StringBuilder actual. La firma del método es la siguiente:
+
+public StringBuilder reverse()
+
+var sb = new StringBuilder("ABC");
+sb.reverse();
+System.out.println(sb);
+
+El resultado será "CBA". Este método no es muy interesante. Tal vez los creadores del examen lo incluyan para animarte a escribir el valor en lugar de confiar en la memoria para los índices.
+
+Trabajando con toString()
+
+La clase Object contiene un método toString() que muchas clases proporcionan como implementación personalizada. La clase StringBuilder es una de estas.
+
+El siguiente código muestra cómo usar este método:
+
+var sb = new StringBuilder("ABC");
+String s = sb.toString();
+
+A menudo, StringBuilder se usa internamente por razones de rendimiento, pero el resultado final necesita ser una cadena (String). Por ejemplo, tal vez se necesite pasar el valor a otro método que espera un String.
+
+Entendiendo la igualdad (Understanding Equality):
+
+En el Capítulo 2, aprendiste a usar == para comparar números y que las referencias de objetos apuntan al mismo objeto. En esta sección, analizamos lo que significa para StringBuilder.
+
+En Java, para determinar si dos objetos son iguales, no solo basta con comparar sus referencias en memoria (usando el operador ==). A veces, necesitamos comparar el contenido de esos objetos. Esto es especialmente relevante cuando hablamos de clases como String y StringBuilder.
+
+Java tiene una característica llamada "String Pool". Cuando creas un objeto String con una cadena literal (entre comillas dobles), Java busca en el String Pool para ver si ya existe un objeto String con ese mismo valor. Si lo encuentra, te devuelve una referencia a ese objeto existente en lugar de crear uno nuevo. Esto ayuda a ahorrar memoria y mejorar el rendimiento.
+
+var x = "Hello World";
+var z = "Hello World".trim();
+System.out.println(x.equals(z)); // true
+
+Comparando equals() y ==
+
+==: Compara las referencias de los objetos. Si dos referencias apuntan al mismo objeto en memoria, == devuelve true.
+
+equals(): Compara el contenido de los objetos. La implementación de equals() varía según la clase. Para las clases envolventes (Integer, Double, etc.) y String, equals() compara el valor.
+
+var one = new StringBuilder();
+var two = new StringBuilder();
+var three = one.append("a");
+
+System.out.println(one == two); // false - one y two son objetos diferentes
+System.out.println(one == three); // true - three es una referencia al mismo objeto que one después de llamar a append()
+
+StringBuilder y equals()
+
+StringBuilder no sobreescribe el método equals() para comparar el contenido. Por defecto, equals() en StringBuilder compara las referencias.
+Si quieres comparar el contenido de dos StringBuilder, debes convertirlos a String usando toString() y luego comparar los String.
+
+var name = "a";
+var builder = new StringBuilder("a");
+System.out.println(name == builder); // DOES NOT COMPILE
+
+Este código no compila porque estás intentando comparar un String con un StringBuilder. Java no puede comparar directamente objetos de tipos diferentes.
+
+El Pool de Cadenas (String Pool)
+
+Dado que las cadenas (strings) están presentes en todas partes en Java, consumen una gran cantidad de memoria. En algunas aplicaciones de producción, pueden ocupar una gran porción de la memoria total del programa. Java reconoce que muchas cadenas se repiten en el programa y resuelve este problema reutilizando las comunes. El pool de cadenas (también conocido como el intern pool) es una ubicación en la Máquina Virtual de Java (JVM) que almacena todas estas cadenas.
+
+El pool de cadenas contiene valores literales y constantes que aparecen en tu programa. Por ejemplo, "nombre" es un literal y, por lo tanto, entra en el pool de cadenas. El método myObject.toString() devuelve una cadena pero no un literal, así que no entra en el pool.
+
+var x = "Hello World";
+var y = "Hello World";
+System.out.println(x == y); // true
+
+Dado que las cadenas son inmutables y los literales se almacenan en el pool, la JVM crea solo una ubicación en memoria para el literal. Por lo tanto, las variables x e y apuntan al mismo lugar en memoria; por lo tanto, la instrucción imprime true.
+
+var x = "Hello World";
+var y = new String("Hello World");
+System.out.println(x == y); // false
+
+La primera línea utiliza el pool de cadenas normalmente. La segunda línea dice: "No, JVM, realmente no quiero que uses el pool de cadenas. Por favor, crea un nuevo objeto para mí, aunque sea menos eficiente".
+
+Utilizando el método intern():
+
+También puedes decirle a Java que use el pool de cadenas. El método intern() utilizará un objeto en el pool de cadenas si ya existe uno presente.
+
+public String intern()
+
+var name = "Hello World";
+var name2 = new String("Hello World").intern();
+System.out.println(name == name2); // true
+
+Primero, le decimos a Java que use el pool de cadenas normalmente para name. Luego, para name2, le decimos que cree un nuevo objeto usando el constructor pero que lo interné y use el pool de cadenas de todos modos. Dado que ambas variables apuntan a la misma referencia en el pool de cadenas, podemos usar el operador ==.
+
+15| var first = "rat" + 1;
+16| var second = "r" + "a" + "t" + "1";
+17| var third = "r" + "a" + "t" + new String("1");
+
+18| System.out.println(first == second);
+19| System.out.println(first == second.intern());
+20| System.out.println(first == third);
+21| System.out.println(first == third.intern());
+
+Líneas 15 y 16: Ambas son constantes en tiempo de compilación y se colocan automáticamente en el pool de cadenas.
+
+Línea 17: Aquí tenemos un constructor de String. Esto significa que ya no tenemos una constante en tiempo de compilación y third no hace referencia a una llamada en el pool de cadenas.
+
+Líneas 18 y 19: La línea 18 es false porque third no está en el pool. La línea 19 es true porque intern() busca en el pool de cadenas y encuentra que first apunta a la misma cadena.
+
+Línea 20 imprime falso
+
+Arreglos:
+
+Hasta ahora, nos hemos referido a las clases String y StringBuilder como una "secuencia de caracteres". Esto es cierto. Están implementadas usando un arreglo de caracteres. Un arreglo es un área de memoria en el heap con espacio para un número designado de elementos. Un String se implementa como un arreglo con algunas métodos que te pueden ser útiles cuando estás tratando con caracteres específicamente. Un StringBuilder es implementado usando un arreglo donde el objeto del arreglo es reemplazado con uno nuevo, más grande cuando se queda sin espacio para almacenar los caracteres. A diferencia de un String, un arreglo puede ser de cualquier otro tipo de Java. Si no quieres usar un String por alguna razón, podrías usar un arreglo de char primitivos directamente:
+
+char[] letters;
+
+Esto no sería muy conveniente porque perderíamos todas las propiedades especiales que String nos da, como escribir "Java".  Mantén en mente que letters es una variable de referencia y no un primitivo. El tipo char es un primitivo. Pero char es lo que va dentro del arreglo y no el tipo del arreglo en sí. El arreglo en sí es de tipo char[].
+
+Creando un Arreglo de Primitivos
+
+int[] numbers = new int[3];
+
+Cuando usas este formulario para instanciar un arreglo, todos los elementos se establecen en el valor por defecto para ese tipo. Como aprendiste en el Capítulo 1, el valor por defecto de un int es 0.  En la Figura 4.4, puedes ver que el valor por defecto para todos los elementos es 0. También, los índices comienzan con 0 y cuentan hacia arriba, así como lo hacían para un String.
+
+Cuando usas este formulario para instanciar un arreglo, todos los elementos se establecen en el valor por defecto para ese tipo. Como aprendiste en el Capítulo 1, el valor por defecto de un int es 0 (imagen02)
+
+int[] moreNumbers = new int[] {42, 55, 99};
+
+En este ejemplo, también creamos un arreglo de enteros de tamaño 3. Esta vez, especificamos los valores iniciales de esos tres elementos en lugar de usar los valores predeterminados.
+
+Java reconoce que esta expresión es redundante. Dado que estás especificando el tipo del arreglo en el lado izquierdo del signo igual, Java ya sabe el tipo. Y dado que estás especificando los valores iniciales, ya sabe el tamaño. Como un atajo, Java te permite escribir esto:
+
+int[] moreNumbers = {42, 55, 99};
+
+Este enfoque se llama un arreglo anónimo. Es anónimo porque no especificas el tipo y el tamaño.
+
+Finalmente, puedes escribir los corchetes ([]) antes o después del nombre, y agregar un espacio es opcional. por ejemplo, lo siguiente es valido:
+
+int[] numA1;
+int [] numA1;
+int []numA1;
+int numA1[];
+int numA1 [];
+
+¿Qué tipos de variables de referencia crees que crea el siguiente código?
+
+int[] ids, types;
+
+La respuesta correcta es que crea dos variables de tipo int[]
+
+int ids[], types;
+
+La primera se llama ids[]. Esta es un arreglo de int, llamada ids. La segunda es solo llamada types. No tiene corchetes, así que es un entero regular
+
 
 
