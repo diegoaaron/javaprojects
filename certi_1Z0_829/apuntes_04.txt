@@ -710,23 +710,147 @@ Para cadenas o caracteres, las mayúsculas son menores que las minúsculas: En e
 
 imagen03 -> ejemos de arrays.compare()
 
-Usando Mismatch()
+Usando mismatch()
 
-Ahora que estás familiarizado con compare(), es hora de aprender sobre mismatch(). Si los arreglos son iguales, mismatch() devuelve -1. De lo contrario, devuelve el primer índice en el que difieren.
+Ahora que estás familiarizado con compare(), es momento de aprender sobre mismatch(). Si los arrays son iguales, mismatch() devuelve -1. De lo contrario, devuelve el primer índice donde difieren. ¿Puedes deducir qué imprimirán estos casos?
 
 System.out.println(Arrays.mismatch(new int[] {1}, new int[] {1}));
-System.out.println(Arrays.mismatch(new String[] {"a"}, "a"));
-
-- mismatch(): Este método se utiliza para comparar dos arreglos y encontrar el primer índice en el que los elementos de ambos arreglos son diferentes.
-
-- Retorno de -1: Si los dos arreglos son exactamente iguales (mismos elementos en el mismo orden), mismatch() devuelve -1.
-
-- Retorno del índice: Si los arreglos son diferentes, devuelve el índice del primer elemento donde se encuentra la diferencia.
-
-new String[] {"A"}); // Este fragmento de código parece estar incompleto. Debería haber otro arreglo para comparar.
+System.out.println(Arrays.mismatch(new String[] {"a"},
+    new String[] {"A"}));
 System.out.println(Arrays.mismatch(new int[] {1, 2}, new int[] {1}));
 
-- new String[] {"A"} por sí solo no realiza ninguna comparación. Necesitarías otro arreglo para comparar con este.
+En el primer ejemplo, los arrays son iguales, por lo que el resultado es -1. En el segundo ejemplo, los elementos en la posición 0 no son iguales, así que el resultado es 0. En el tercer ejemplo, los elementos en la posición 0 son iguales, así que seguimos comparando. El elemento en el índice 1 no es igual porque un array tiene un elemento en el índice 1 y el otro no. Por lo tanto, el resultado es 1.
 
-- Por ejemplo, Arrays.mismatch(new String[] {"A"}, new String[] {"B"}) compararía las cadenas "A" y "B" y devolvería 0, ya que la diferencia se encuentra en el primer índice.
+imagen04 -> comparación entre "equals", "compare" y "mismatch"
+
+
+Usando Métodos con Varargs:
+
+Cuando creas un array, se ve como lo que hemos visto hasta ahora, hay otra forma en que puede verse. Aquí hay tres ejemplos con un método main():
+
+public static void main(String[] args)
+public static void main(String args[])
+public static void main(String... args) // varargs
+
+El tercer ejemplo usa una sintaxis llamada varargs (argumentos variables). Por ahora, solo necesitas saber que puedes usar una variable definida usando varargs como si fuera un array normal. Por ejemplo, args.length y args[0] son válidos.
+
+Trabajando con Arrays Multidimensionales:
+
+Los arrays son objetos, y los componentes del array pueden ser objetos.
+
+Los separadores múltiples de array son todo lo que se necesita para declarar arrays con múltiples dimensiones. Puedes ubicarlos con el tipo o nombre de variable en la declaración:
+int[][] vars1;      // array 2D
+int vars2[][];     // array 2D
+int[] vars3[];     // array 2D
+int[] vars4[], space[][]; // un array 2D Y un array 3D
+
+Los primeros dos ejemplos no son sorprendentes y declaran un array bidimensional (2D). El tercer ejemplo también declara un array 2D. No hay buena razón para usar este estilo excepto para confundir a los lectores. El ejemplo final declara dos arrays en la misma línea. Sumando los corchetes, vemos que vars4 es un array 2D y space es un array 3D. De nuevo, no hay razón para usar este estilo excepto para confundir.
+
+Puedes especificar el tamaño de tu array multidimensional en la declaración:
+String[][] rectangle = new String[3][2];
+El resultado es un array "rectangle" con tres elementos, cada uno referenciando un array de dos elementos.
+
+rectangle[0][1] = "set"; -> si asingamos esto tendriamos otros valores null dentro del array de 2 dimensiones.
+
+int[][] diffSize = {{1,4},{3},{9,8,7}}; // tambien podemos declarar arrays asimetricos (irregulaes)
+
+otra forma de declarar este tipo de arrays asimetricos es:
+
+int[][] args = new int[4][];
+args[0] = new int[5];
+args[1] = new int[3];
+
+
+La operación más común en un array multidimensional es recorrerlo. Este ejemplo imprime un array 2D:
+
+var twoD = new int[3][2];
+for(int i = 0; i < twoD.length; i++) {
+  for(int j = 0; j < twoD[i].length; j++)
+    System.out.print(twoD[i][j] + " "); // imprime elemento
+  System.out.println();                   // tiempo para nueva fila
+}
+
+Aunque podemos reducirlo utilizando el for mejorador
+
+for(int[] inner: twoD){
+ for(int num: inner)
+   System.out.println(num + " ");
+ System.out.println();
+}
+
+Encontrando el Mínimo y Máximo:
+
+Los métodos min() y max() comparan dos valores y devuelven uno de ellos. Las firmas de método para min() son:
+
+public static double min(double a, double b)
+public static float min(float a, float b)
+public static int min(int a, int b)
+public static long min(long a, long b)
+
+Hay cuatro métodos sobrecargados, así que siempre tienes una API disponible con el mismo tipo. Cada método devuelve el menor entre a o b. El método max() funciona igual, excepto que devuelve el valor mayor.
+
+El siguiente ejemplo muestra cómo usar estos métodos:
+int first = Math.max(3, 7); // 7
+int second = Math.min(7, -9); // -9
+
+La primera línea devuelve 7 porque es mayor. La segunda línea devuelve -9 porque es menor.
+
+Redondeando Números:
+
+El método round() elimina la parte decimal del valor, eligiendo el siguiente número mayor cuando corresponde. Si la parte fraccionaria es .5 o mayor, redondeamos hacia arriba.
+
+Las firmas del método round() son:
+
+public static long round(double num)
+public static int round(float num)
+
+Hay dos métodos sobrecargados para asegurar que haya espacio suficiente para almacenar un double redondeado si es necesario. Ejemplos de uso:
+
+long low = Math.round(123.45);    // 123
+long high = Math.round(123.50);   // 124
+int fromFloat = Math.round(123.45f); // 123
+
+La primera línea devuelve 123 porque .45 es menor que la mitad. La segunda línea devuelve 124 porque la parte fraccionaria es justo la mitad. La última línea muestra que un float explícito activa la firma del método que devuelve un int.
+
+Determinando el Techo y el Piso:
+
+El método ceil() toma un valor double. Si es un número entero, devuelve el mismo valor. Si tiene algún valor fraccionario, redondea hacia arriba al siguiente número entero. En contraste, el método floor() descarta cualquier valor después del decimal.
+
+Las firmas de los métodos son:
+
+public static double ceil(double num)
+public static double floor(double num)
+
+Ejemplo de uso:
+
+double c = Math.ceil(3.14);  // 4.0
+double f = Math.floor(3.14); // 3.0
+
+La primera línea devuelve 4.0 porque cuatro es el entero inmediatamente mayor. La segunda línea devuelve 3.0 porque es el entero inmediatamente menor.
+
+Calculando Exponentes:
+
+El método pow() maneja exponentes. Como recordarás de matemáticas básicas, 3² significa tres al cuadrado, que es 3 * 3 o 9. También se permiten exponentes fraccionarios. Dieciséis a la potencia 0.5 significa la raíz cuadrada de 16, que es 4. (No te preocupes, no tendrás que calcular raíces cuadradas en el examen).
+
+La firma del método es:
+
+public static double pow(double number, double exponent)
+
+Ejemplo de uso:
+
+double squared = Math.pow(5, 2); // 25.0
+
+Nota que el resultado es 25.0 en lugar de 25 ya que es un double. No te preocupes; el examen no te pedirá hacer matemáticas complicadas.
+
+Generando Números Aleatorios:
+
+El método random() devuelve un valor mayor o igual a 0 y menor que 1. La firma del método es:
+
+public static double random()
+
+double num = Math.random();
+
+Como es un número aleatorio, no podemos saber el resultado por adelantado. Sin embargo, podemos descartar ciertos números. Por ejemplo, no puede ser negativo porque eso es menor que 0. No puede ser 1.0 porque eso no es menor que 1.
+
+NOTA: Aunque no está en el examen, es común usar la clase Random para generar números pseudo-aleatorios. Permite generar números de diferentes tipos.
 
