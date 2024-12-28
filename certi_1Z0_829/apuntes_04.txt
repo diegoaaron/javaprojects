@@ -1104,3 +1104,224 @@ System.out.println(Period.of(1,2,3));  // Imprime: P1Y2M3D
 Como puedes ver, la P siempre inicia el String para mostrar que es una medida de periodo. Luego vienen el número de años, número de meses y número de días. Si alguno de estos es cero, se omite.
 
 ¿Puedes deducir qué imprime esto?
+
+```java
+System.out.println(Period.ofMonths(3));
+```
+La salida es P3M. Recuerda que Java omite cualquier medida que sea cero.
+
+Lo último que debes saber sobre Period es con qué objetos se puede usar. Veamos un código:
+
+```java
+3| var date = LocalDate.of(2022, 1, 20);
+4| var time = LocalTime.of(6, 15);
+5| var dateTime = LocalDateTime.of(date, time);
+6| var period = Period.ofMonths(1);
+7| System.out.println(date.plus(period));      // 2022-02-20
+8| System.out.println(dateTime.plus(period));  // 2022-02-20T06:15
+9| System.out.println(time.plus(period));      // Exception
+```
+
+Las líneas 7 y 8 funcionan como se espera. Añaden un mes al 20 de enero de 2022, resultando en 20 de febrero de 2022. La primera solo tiene la fecha, y la segunda tiene tanto la fecha como la hora.
+
+La línea 9 intenta añadir un mes a un objeto que solo tiene tiempo. Esto no funcionará. Java lanza una UnsupportedTemporalTypeException y se queja de que intentamos usar una unidad no soportada: Meses.
+
+Como puedes ver, tienes que prestar atención al tipo de objetos de fecha y hora en cada lugar que los veas.
+
+**Trabajando con Duraciones**
+
+Probablemente hayas notado que un Period es un día o más de tiempo. También existe Duration, que está pensado para unidades más pequeñas de tiempo. Para Duration, puedes especificar el número de días, horas, minutos, segundos o nanosegundos. Y sí, podrías pasar 365 días para hacer un año, pero realmente no deberías - para eso existe Period.
+
+Duration funciona aproximadamente de la misma manera que Period, excepto que se usa con objetos que tienen tiempo. Duration se muestra comenzando con PT, que puedes pensar como un periodo de tiempo. Una Duration se almacena en horas, minutos y segundos. El número de segundos incluye segundos fraccionarios.
+
+Podemos crear una Duration usando diferentes granularidades:
+
+```java
+var daily = Duration.ofDays(1);             // PT24H
+var hourly = Duration.ofHours(1);           // PT1H
+var everyMinute = Duration.ofMinutes(1);    // PT1M
+var everyTenSeconds = Duration.ofSeconds(10);// PT10S
+var everyMilli = Duration.ofMillis(1);      // PT0.001S
+var everyNano = Duration.ofNanos(1);        // PT0.000000001S
+```
+
+Duration no tiene un método factory que tome múltiples unidades como lo hace Period. Si quieres que algo ocurra cada hora y media, especificas 90 minutos.
+
+Duration incluye otro método factory más genérico. Toma un número y un TemporalUnit. La idea es, por ejemplo, "5 segundos." Sin embargo, TemporalUnit es una interfaz. Por el momento, solo existe una implementación llamada ChronoUnit.
+
+El ejemplo anterior podría reescribirse así:
+
+```java
+var daily = Duration.of(1, ChronoUnit.DAYS);
+var hourly = Duration.of(1, ChronoUnit.HOURS);
+var everyMinute = Duration.of(1, ChronoUnit.MINUTES);
+var everyTenSeconds = Duration.of(10, ChronoUnit.SECONDS);
+var everyMilli = Duration.of(1, ChronoUnit.MILLIS);
+var everyNano = Duration.of(1, ChronoUnit.NANOS);
+```
+
+ChronoUnit también incluye algunas unidades convenientes como ChronoUnit.HALF_DAYS para representar 12 horas.
+
+**ChronoUnit para Diferencias**
+
+ChronoUnit es una excelente manera de determinar qué tan separados están dos valores Temporal. Temporal incluye LocalDate, LocalTime, y similares. ChronoUnit está en el paquete java.time.temporal.
+
+```java
+var one = LocalTime.of(5, 15);
+var two = LocalTime.of(6, 30);
+var date = LocalDate.of(2016, 1, 20);
+System.out.println(ChronoUnit.HOURS.between(one, two));      // 1
+System.out.println(ChronoUnit.MINUTES.between(one, two));    // 75
+System.out.println(ChronoUnit.MINUTES.between(one, date));   // DateTimeException
+```
+
+El primer print muestra que between trunca en lugar de redondear. El segundo muestra lo fácil que es contar en diferentes unidades. Solo cambia el tipo de ChronoUnit. El último nos recuerda que Java lanzará una excepción si mezclamos lo que se puede hacer con objetos de fecha versus tiempo.
+
+Alternativamente, puedes truncar cualquier objeto con un elemento de tiempo. Por ejemplo:
+
+```java
+LocalTime time = LocalTime.of(3,12,45);
+System.out.println(time);                                       // 03:12:45
+LocalTime truncated = time.truncatedTo(ChronoUnit.MINUTES);
+System.out.println(truncated);                                  // 03:12
+```
+
+Este ejemplo pone en cero cualquier campo más pequeño que minutos. En nuestro caso, elimina los segundos.
+
+"Usar una Duration funciona de la misma manera que usar un Period. Por ejemplo:
+
+7: var date = LocalDate.of(2022, 1, 20);
+8: var time = LocalTime.of(6, 15);
+9: var dateTime = LocalDateTime.of(date, time);
+10: var duration = Duration.ofHours(6);
+11: System.out.println(dateTime.plus(duration)); // 2022-01-20T12:15
+12: System.out.println(time.plus(duration)); // 12:15
+13: System.out.println(date.plus(duration)); // UnsupportedTemporalTypeException
+
+La línea 11 muestra que podemos agregar horas a un LocalDateTime, ya que contiene una hora. La línea 12 también funciona, ya que solo tenemos una hora. La línea 13 falla porque no podemos agregar horas a un objeto que no contiene una hora.
+
+Probemos nuevamente, pero agregando 23 horas esta vez.
+
+7: var date = LocalDate.of(2022, 1, 20);
+8: var time = LocalTime.of(6, 15);
+9: var dateTime = LocalDateTime.of(date, time);
+10: var duration = Duration.ofHours(23);
+11: System.out.println(dateTime.plus(duration)); // 2022-01-21T05:15
+12: System.out.println(time.plus(duration)); // 05:15
+13: System.out.println(date.plus(duration)); // UnsupportedTemporalTypeException
+
+Esta vez vemos que Java avanza más allá del final del día. La línea 11 pasa al siguiente día ya que pasamos de la medianoche. La línea 12 no tiene un día, por lo que la hora simplemente se ajusta, al igual que en un reloj real."
+
+"Period vs. Duration
+
+Recuerda que Period y Duration no son equivalentes. Este ejemplo muestra un Period y un Duration de la misma longitud:
+
+var date = LocalDate.of(2022, 5, 25);
+var period = Period.ofDays(1);
+var days = Duration.ofDays(1);
+
+System.out.println(date.plus(period)); // 2022-05-26
+System.out.println(date.plus(days));   // Unsupported unit: Seconds
+
+
+Dado que estamos trabajando con un LocalDate, se requiere usar Period. Duration tiene unidades de tiempo, incluso si no las vemos, y están destinadas solo para objetos con tiempo.
+
+imagen06 -> tabla de cuando usar Duration o Period
+
+Trabajando con Instants:
+
+"La clase Instant representa un momento específico en el tiempo en la zona horaria GMT.
+
+Supongamos que quieres ejecutar un temporizador:
+
+var now = Instant.now();
+
+// hacer algo que tome tiempo
+
+var later = Instant.now();
+var duration = Duration.between(now, later);
+System.out.println(duration.toMillis()); // Devuelve el número de milisegundos
+
+En nuestro caso, lo que "tomaba tiempo" duró un poco más de un segundo, y el programa imprimió 1025.
+
+Si tienes un ZonedDateTime, puedes convertirlo a un Instant:
+
+var date = LocalDate.of(2022, 5, 25);
+var time = LocalTime.of(11, 55, 00);
+var zone = ZoneId.of("US/Eastern");
+var zonedDateTime = ZonedDateTime.of(date, time, zone);
+var instant = zonedDateTime.toInstant(); // 2022-05-25T15:55:00Z
+
+System.out.println(zonedDateTime); // 2022-05-25T11:55-04:00[US/Eastern]
+System.out.println(instant); // 2022-05-25T15:55:00Z
+
+Las últimas dos líneas representan el mismo momento en el tiempo. El ZonedDateTime incluye una zona horaria. El Instant elimina la zona horaria y lo convierte en un instante de tiempo en GMT.
+
+No puedes convertir un LocalDateTime a un Instant. Recuerda que un Instant es un punto en el tiempo. Un LocalDateTime no contiene una zona horaria y, por lo tanto, no es reconocido universalmente en todo el mundo como el mismo momento en el tiempo."
+
+Teniendo en cuenta el horario de verano:
+
+Algunos países observan el horario de verano. Esto significa que los relojes se ajustan una hora dos veces al año para aprovechar mejor la luz del sol. No todos los países participan, y aquellos que lo hacen usan diferentes fines de semana para el cambio. En el examen, solo debes trabajar con el horario de verano de Estados Unidos, que es lo que describimos aquí.
+
+La pregunta te indicará si una fecha y hora mencionada cae en un fin de semana en el que se programa cambiar la hora. Si no se menciona en una pregunta, puedes asumir que es un fin de semana normal. El acto de avanzar o retrasar el reloj ocurre a las 2:00 a.m., que cae muy temprano en la mañana del domingo.
+
+La Figura 4.10 muestra lo que sucede con los relojes. Cuando cambiamos nuestros relojes en marzo, el tiempo avanza de 1:59 a.m. a 3:00 a.m. Cuando cambiamos nuestros relojes en noviembre, el tiempo retrocede, y experimentamos la hora de 1:00 a.m. a 1:59 a.m. dos veces. Los niños aprenden esto como "adelantar el reloj en primavera y atrasarlo en otoño".
+
+Por ejemplo, el 13 de marzo de 2022, avanzamos nuestros relojes una hora y saltamos de 2:00 a.m. a 3:00 a.m. Esto significa que no hay 2:30 a.m. ese día. Si quisiéramos saber la hora una hora después de las 1  1:30, sería 3:30.
+
+var date = LocalDate.of(2022, Month.MARCH, 13);
+var time = LocalTime.of(1, 30);
+var zone = ZoneId.of("US/Eastern");
+
+Este código en Java establece una fecha (13 de marzo de 2022), una hora (1:30 AM) y una zona horaria (Este de Estados Unidos) para representar un momento específico en el tiempo, teniendo en cuenta el cambio de horario.
+
+var zoneId = ZoneId.of("US/Eastern");
+var dateTime = ZonedDateTime.of(date, time, zoneId);
+System.out.println(dateTime); // 2022-03-13T01:30-05:00[US/Eastern]
+System.out.println(dateTime.getHour()); // 1
+System.out.println(dateTime.getOffset()); // -05:00
+
+dateTime = dateTime.plusHours(1);
+System.out.println(dateTime); // 2022-03-13T03:30-04:00[US/Eastern]
+System.out.println(dateTime.getHour()); // 3
+System.out.println(dateTime.getOffset()); // -04:00
+
+// ... (código similar para noviembre)
+
+¡Absolutamente! Aquí tienes la traducción del código y una explicación detallada, teniendo en cuenta el contexto del horario de verano:
+
+Traducción y Explicación
+Código y Salida:
+
+Java
+
+var zoneId = ZoneId.of("US/Eastern");
+var dateTime = ZonedDateTime.of(date, time, zoneId);
+System.out.println(dateTime); // 2022-03-13T01:30-05:00[US/Eastern]
+System.out.println(dateTime.getHour()); // 1
+System.out.println(dateTime.getOffset()); // -05:00
+
+dateTime = dateTime.plusHours(1);
+System.out.println(dateTime); // 2022-03-13T03:30-04:00[US/Eastern]
+System.out.println(dateTime.getHour()); // 3
+System.out.println(dateTime.getOffset()); // -04:00
+
+// ... (código similar para noviembre)
+Explicación:
+
+Este código de Java demuestra cómo el horario de verano afecta las representaciones de fecha y hora en la zona horaria de Estados Unidos (US/Eastern).
+
+Establecimiento de la fecha y hora: Se crea un objeto ZonedDateTime para representar un momento específico (por ejemplo, el 13 de marzo de 2022 a la 1:30 AM) en la zona horaria de Estados Unidos.
+Impresión de detalles: Se imprime la fecha y hora completa, la hora y el offset (diferencia horaria respecto a UTC).
+Avanzando una hora: Se utiliza el método plusHours(1) para avanzar una hora.
+Impresión de los nuevos detalles: Se vuelven a imprimir la fecha y hora, hora y offset para observar los cambios.
+Observaciones clave:
+
+Salto en la hora: Al avanzar una hora desde la 1:30 AM el 13 de marzo, se salta directamente a las 3:30 AM debido al cambio de horario.
+Cambio en el offset: El offset (diferencia horaria respecto a UTC) también cambia de -05:00 a -04:00, reflejando el ajuste del horario de verano.
+Comportamiento en noviembre: En noviembre, cuando se retrocede el reloj, se experimenta una hora duplicada. Por ejemplo, después de la 1:30 AM, la siguiente hora también es la 1:30 AM.
+Manejo de horas inexistentes: Java maneja inteligentemente las horas que no existen debido al cambio de horario (como las 2:30 AM del 13 de marzo).
+¿Qué significa esto?
+
+Este código demuestra cómo Java maneja los cambios en el horario de verano, ajustando automáticamente la hora y el offset cuando se realizan operaciones con fechas y horas. Es importante tener en cuenta estos ajustes al trabajar con diferentes zonas horarias y períodos de tiempo.
+
