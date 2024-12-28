@@ -922,4 +922,185 @@ var dateTime2 = LocalDateTime.of(date1, time1);
 
 En la primera línea, se crea un objeto LocalDateTime especificando directamente todos los componentes de la fecha y la hora. En la segunda línea, se combinan previamente un objeto LocalDate (fecha) y un objeto LocalTime (hora) para crear el mismo LocalDateTime.
 
+Hay muchas firmas de métodos porque hay más combinaciones. Las siguientes firmas de métodos usan valores enteros:
 
+public static LocalDateTime of(int year, int month, int dayOfMonth, int hour, int minute)
+public static LocalDateTime of(int year, int month, int dayOfMonth, int hour, int minute, int second)
+public static LocalDateTime of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanos)
+
+Otros toman una referencia de Month:
+
+public static LocalDateTime of(int year, Month month, int dayOfMonth, int hour, int minute)
+public static LocalDateTime of(int year, Month month, int dayOfMonth, int hour, int minute, int second)
+public static LocalDateTime of(int year, Month month, int dayOfMonth, int hour, int minute, int second, int nanos)
+
+Finalmente, uno toma un LocalDate y LocalTime existentes:
+
+public static LocalDateTime of(LocalDate date, LocalTime time)
+
+Para crear un ZonedDateTime, primero necesitamos obtener la zona horaria deseada. Usaremos US/Eastern en nuestros ejemplos:
+
+var zone = ZoneId.of("US/Eastern");
+var zoned1 = ZonedDateTime.of(2022, 1, 20, 6, 15, 30, 200, zone);
+var zoned2 = ZonedDateTime.of(date1, time1, zone);
+var zoned3 = ZonedDateTime.of(dateTime1, zone);
+
+Comenzamos obteniendo el objeto de zona horaria. Luego usamos uno de los tres enfoques para crear el ZonedDateTime. El primero pasa todos los campos individualmente. No recomendamos este enfoque—hay demasiados números, y es difícil de leer. Un mejor enfoque es pasar un objeto LocalDate y un objeto LocalTime, o un objeto LocalDateTime.
+
+Aunque hay otras formas de crear un ZonedDateTime, solo necesitas conocer tres para el examen:
+
+public static ZonedDateTime of(int year, int month, int dayOfMonth, int hour, int minute, int second, int nanos, ZoneId zone)
+public static ZonedDateTime of(LocalDate date, LocalTime time, ZoneId zone)
+public static ZonedDateTime of(LocalDateTime dateTime, ZoneId zone)
+
+Observa que no hay una opción para pasar el enum Month. Además, no usamos un constructor en ninguno de los ejemplos. Las clases de fecha y hora tienen constructores privados junto con métodos estáticos que devuelven instancias. Esto se conoce como el patrón de fábrica. Los creadores del examen pueden presentarte algo como esto:
+
+var d = new LocalDate(); // NO COMPILA
+
+No caigas en esta trampa. No se te permite construir un objeto de fecha u hora directamente.
+
+Otro truco es lo que sucede cuando pasas números no válidos a of(), por ejemplo:
+
+var d = LocalDate.of(2022, Month.JANUARY, 32); // DateTimeException
+
+No necesitas saber la excepción exacta que se lanza, pero es una clara:
+
+java.time.DateTimeException: Valor no válido para DayOfMonth (valores válidos 1-28/31): 32
+
+Manipulación de Fechas y Horas
+
+Agregar a una fecha es fácil. Las clases de fecha y hora son inmutables. Recuerda asignar los resultados de estos métodos a una variable de referencia para que no se pierdan.
+
+12: var date = LocalDate.of(2022, Month.JANUARY, 20);
+13: System.out.println(date); // 2022-01-20
+14: date = date.plusDays(2);
+15: System.out.println(date); // 2022-01-22
+16: date = date.plusWeeks(1);
+17: System.out.println(date); // 2022-01-29
+18: date = date.plusMonths(1);
+19: System.out.println(date); // 2022-02-28
+20: date = date.plusYears(5);
+21: System.out.println(date); // 2027-02-28
+
+Este código es agradable porque hace exactamente lo que parece. Comenzamos con el 20 de enero de 2022. En la línea 14, le agregamos dos días y lo reasignamos a nuestra variable de referencia. En la línea 16, agregamos una semana. Este método nos permite escribir un código más limpio que plusDays(7). Ahora la fecha es el 29 de enero de 2022. En la línea 18, agregamos un mes. Esto nos llevaría al 29 de febrero de 2022. Sin embargo, 2022 no es un año bisiesto (2020 y 2024 sí lo son). Java es lo suficientemente inteligente como para darse cuenta de que el 29 de febrero de 2022 no existe, y nos da el 28 de febrero de 2022 en su lugar. Finalmente, la línea 20 agrega cinco años.
+
+
+También hay métodos agradables y fáciles para retroceder en el tiempo. Esta vez, trabajemos con LocalDateTime:
+
+22: var date = LocalDate.of(2024, Month.JANUARY, 20);
+23: var time = LocalTime.of(5, 15);
+24: var dateTime = LocalDateTime.of(date, time);
+25: System.out.println(dateTime);  // 2024-01-20T05:15
+26: dateTime = dateTime.minusDays(1);
+27: System.out.println(dateTime);  // 2024-01-19T05:15
+28: dateTime = dateTime.minusHours(10);
+29: System.out.println(dateTime);  // 2024-01-18T19:15
+30: dateTime = dateTime.minusSeconds(30);
+31: System.out.println(dateTime);  // 2024-01-18T19:14:30
+
+La línea 25 imprime la fecha original del 20 de enero de 2024, a las 5:15 a.m. La línea 26 resta un día completo, llevándonos al 19 de enero de 2024, a las 5:15 a.m. La línea 28 resta 10 horas, mostrando que la fecha cambiará si las horas lo provocan, ajustándose y llevándonos al 18 de enero de 2024, a las 19:15 (7:15 p.m.). Finalmente, la línea 30 resta 30 segundos. Puedes ver que, de repente, el valor de la salida comienza a mostrar los segundos. Java es lo suficientemente inteligente como para ocultar los segundos y nanosegundos cuando no los estamos usando.
+
+var date = LocalDate.of(2024, Month.JANUARY, 20);
+var time = LocalTime.of(5, 15);
+var dateTime = LocalDateTime.of(date, time)
+    .minusDays(1).minusHours(10).minusSeconds(30);
+
+Cuando tienes muchas manipulaciones por hacer, este encadenamiento es útil. Hay dos formas en que los creadores del examen pueden intentar confundirte. ¿Qué crees que imprime esto?
+
+var date = LocalDate.of(2024, Month.JANUARY, 20);
+date.plusDays(10);
+System.out.println(date);
+
+var date = LocalDate.of(2024, Month.JANUARY, 20);
+date.plusDays(10);
+System.out.println(date);
+
+Imprime el 20 de enero de 2024. Agregar 10 días fue inútil porque el programa ignoró el resultado. Siempre que veas tipos inmutables, presta atención a este comportamiento.
+
+Asegúrate de que el valor de retorno de una llamada a método no sea ignorado. El examen también puede evaluar si recuerdas qué incluye cada uno de los objetos de fecha y hora. ¿Ves qué está mal aquí?
+
+```java
+var date = LocalDate.of(2024, Month.JANUARY, 20);
+date = date.plusMinutes(1);    // NO COMPILA
+```
+
+LocalDate no contiene tiempo. Esto significa que no puedes añadir minutos a él. Esto puede ser engañoso en una secuencia encadenada de operaciones de suma/resta, así que asegúrate de conocer qué métodos en la Tabla 4.6 pueden ser llamados en qué tipos.
+
+imagen05 -> metodos localdate, localtime y localdateTime
+
+Trabajando con Periodos:
+
+¡Ahora sabes lo suficiente para hacer algo divertido con las fechas! Nuestro zoológico realiza actividades de enriquecimiento animal para darles algo agradable que hacer. El encargado principal del zoológico ha decidido cambiar los juguetes cada mes. Este sistema continuará durante tres meses para ver cómo funciona.
+
+public static void main(String[] args) {
+    var start = LocalDate.of(2022, Month.JANUARY, 1);
+    var end = LocalDate.of(2022, Month.MARCH, 30);
+    performAnimalEnrichment(start, end);
+}
+
+private static void performAnimalEnrichment(LocalDate start, LocalDate end) {
+    var upTo = start;
+    while (upTo.isBefore(end)) { // verifica si todavía está antes de la fecha final
+        System.out.println("dar un juguete nuevo: " + upTo);
+        upTo = upTo.plusMonths(1); // añade un mes
+    }
+}
+
+
+Este código funciona bien. Añade un mes a la fecha hasta que alcanza la fecha final.
+El problema es que este método no puede reutilizarse. Nuestro encargado del zoológico quiere probar diferentes horarios para ver cuál funciona mejor.
+
+Afortunadamente, Java tiene una clase Period que podemos usar. Este código hace lo mismo que el ejemplo anterior:
+
+public static void main(String[] args) {
+    var start = LocalDate.of(2022, Month.JANUARY, 1);
+    var end = LocalDate.of(2022, Month.MARCH, 30);
+    var period = Period.ofMonths(1); // crea un periodo
+    performAnimalEnrichment(start, end, period);
+}
+
+private static void performAnimalEnrichment(LocalDate start, LocalDate end, Period period) { // usa el periodo genérico
+    var upTo = start;
+    while (upTo.isBefore(end)) {
+        System.out.println("dar un juguete nuevo: " + upTo);
+        upTo = upTo.plus(period); // añade el periodo
+    }
+}
+
+El método puede añadir cualquier periodo de tiempo que se le pase. Esto nos permite reutilizar el mismo método para diferentes periodos de tiempo si el encargado del zoológico cambia de opinión.
+
+
+```java
+var annually = Period.ofYears(1);          // cada 1 año
+var quarterly = Period.ofMonths(3);        // cada 3 meses
+var everyThreeWeeks = Period.ofWeeks(3);   // cada 3 semanas
+var everyOtherDay = Period.ofDays(2);      // cada 2 días
+var everyYearAndAWeek = Period.of(1, 0, 7); // cada año y 7 días
+```
+
+Hay una peculiaridad: No puedes encadenar métodos al crear un Period. El siguiente código parece equivalente al ejemplo everyYearAndAWeek, pero no lo es. Solo se usa el último método porque los métodos Period.of son métodos estáticos.
+
+```java
+var wrong = Period.ofYears(1).ofWeeks(1); // cada semana
+```
+
+Este código engañoso es realmente como escribir:
+
+```java
+var wrong = Period.ofYears(1);
+wrong = Period.ofWeeks(1);
+```
+
+¡Esto claramente no es lo que pretendías! Por eso el método of() te permite pasar el número de años, meses y días. Todos están incluidos en el mismo periodo. Recibirás una advertencia del compilador sobre esto. Las advertencias del compilador te indican que algo está mal o es sospechoso sin fallar la compilación.
+
+El método of() solo acepta años, meses y días. La capacidad de usar otro método factory para pasar semanas es simplemente una conveniencia. Como podrías imaginar, el periodo real se almacena en términos de años, meses y días.
+
+Cuando imprimes el valor, Java muestra cualquier parte que no sea cero usando el formato mostrado en la Figura 4.9.
+
+```java
+System.out.println(Period.of(1,2,3));  // Imprime: P1Y2M3D
+```
+
+Como puedes ver, la P siempre inicia el String para mostrar que es una medida de periodo. Luego vienen el número de años, número de meses y número de días. Si alguno de estos es cero, se omite.
+
+¿Puedes deducir qué imprime esto?
