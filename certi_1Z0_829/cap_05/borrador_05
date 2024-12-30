@@ -1,0 +1,3 @@
+1) Package Access: El método se puede llamar desde cualquier clase dentro del mismo paquete. Es el que se usa por defecto si no se especifica ningún modificador.
+
+2) protected: El método se puede llamar desde la misma clase, desde cualquier clase del mismo paquete, y desde las subclases, incluso si están en otro paquete.
