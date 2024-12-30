@@ -1,6 +1,6 @@
 por favor traduce el texto de la imagen a español de forma literal, teniendo en cuenta que es sobre java 17 y dale una formato al codigo para diferenciarlo del texto normal.
 
-por favor traduce el texto en PDF a español, este texto habla sobre el capitulo 5 del libro OCP java SE 17 developer study guide: exam 1z0-829. el resultado debes entregarmelo en otro PDF.
+por favor traduce el texto en PDF a español, este texto habla sobre el capitulo 5 del libro OCP java SE 17 developer study guide: exam 1z0-829. el resultado debes entregarmelo en PDF y de se posible la parte de codigo (que es java) dale un formato que se diferencie del texto normal.
 
 por favor traduce el texto en PDF a español, este texto habla sobre los ejercicios del capitulo 5 del libro OCP java SE 17 developer study guide: exam 1z0-829. ten en cuenta que las preguntas van desde la página 1 a la 11 y la solución de las preguntas esta de la página 12 hasta el final y que ademas cada pregunta y respuesta se relacionan por el numero que tienen al inicio del enunciado. si lo vez viable entregame el resultado con la combinación de pregunta seguido de la respuesta y en PDF.
 
