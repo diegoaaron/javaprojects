@@ -1,4 +1,5 @@
-por favor traduce el texto de la imagen a español de forma literal, teniendo en cuenta que es sobre java 17 y dale una formato al codigo para diferenciarlo del texto normal.
+por favor traduce el texto de la imagen a español de forma literal, es sobre java 17, considera que el texto se lee de izquierda a derecha, dale un formato al codigo para diferenciarlo del texto normal, entregamelo en formato markdown.
+
 
 por favor traduce el texto en PDF a español, este texto habla sobre el capitulo 5 del libro OCP java SE 17 developer study guide: exam 1z0-829. el resultado debes entregarmelo en PDF y de se posible la parte de codigo (que es java) dale un formato que se diferencie del texto normal.
 
