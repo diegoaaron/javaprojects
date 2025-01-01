@@ -1,27 +1,3 @@
-1) Package Access: El método se puede llamar desde cualquier clase dentro del mismo paquete. Es el que se usa por defecto si no se especifica ningún modificador.
-
-2) protected: El método se puede llamar desde la misma clase, desde cualquier clase del mismo paquete, y desde las subclases, incluso si están en otro paquete.
-
-3) Los métodos con un tipo de retorno diferente a "void" deben tener una sentencia "return" dentro del cuerpo del método con la  primitiva u objeto a devolver. Los métodos que tienen "void" pueden tener una sentencia return sin valor de retorno u omitir la sentencia return por completo. Piensa en una sentencia return en un método void como el método diciendo "¡He terminado!" y saliendo antes de tiempo, como en el siguiente ejemplo:
-
-4) ¿Cómo funciona final con diferentes tipos de variables?
-
-Variables primitivas: Si una variable final es de un tipo primitivo (como int, boolean, etc.), el valor en sí no puede cambiar después de la asignación inicial.
-
-Referencias a objetos: Si una variable final guarda una referencia a un objeto (como un Animal o un array), la referencia no puede cambiar, es decir, no puedes hacer que apunte a un objeto diferente. Sin embargo, sí puedes modificar el estado interno del objeto.
-
-5) "variables efectivamente finales" Básicamente, una variable local es efectivamente "final" si su valor no se modifica después de ser asignada, aunque no se le haya añadido explícitamente la palabra clave "final".
-
-El texto propone una prueba sencilla: añade "final" a la declaración de la variable. Si el código compila sin errores, entonces la variable es efectivamente "final".
-
-(codigo ejemplo)
-
-name: se le asigna un valor en la línea 12 y no se vuelve a asignar. La línea 16 crea un nuevo valor con substring() pero no lo guarda en name, por lo que el valor original de name no cambia (recuerda que los Strings en Java son inmutables).
-
-wet: se le asigna un valor solo una vez y no se modifica después.
-
-En cambio, size no es efectivamente final porque podría ser incrementada en la línea 15.
-
 
 6) El texto explica cómo funciona la palabra clave final cuando se aplica a variables de instancia en Java.
 
