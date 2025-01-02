@@ -1,15 +1,2 @@
 
-6) El texto explica cómo funciona la palabra clave final cuando se aplica a variables de instancia en Java.
-
-Puntos clave:
-
-Inicialización obligatoria: Una variable de instancia marcada como final debe ser inicializada con un valor. Esto puede hacerse en tres lugares:
-
-Directamente en la declaración (como age = 10).
-En un bloque de inicialización de instancia (como { fishEaten = 10; }).
-Dentro del constructor de la clase (como se hace con name).
-Una sola asignación: Al igual que con las variables locales final, a una variable de instancia final solo se le puede asignar un valor una vez. Intentar cambiar su valor después de la inicialización resultará en un error de compilación.
-
-Si no inicializas una variable de instancia final o intentas asignarle un valor más de una vez, el compilador generará un error.
-
 
