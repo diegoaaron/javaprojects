@@ -2,5 +2,5 @@
 
 -- código desde imagen
 
-pasame el código formateado para copiarlo y utlizando solo los saltos de linea necesarios.
+entregame el código formateado para copiarlo y utlizando la menor cantidad de saltos de linea.
 
