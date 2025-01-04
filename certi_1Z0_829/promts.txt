@@ -1,6 +1,4 @@
-
-
 -- código desde imagen
 
 entregame el código formateado para copiarlo y utlizando la menor cantidad de saltos de linea.
-
+explicame lo que dice los parrafos que no son codigo.
