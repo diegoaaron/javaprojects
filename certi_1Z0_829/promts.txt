@@ -8,7 +8,8 @@ explicame el texto de la imagen en español y siguiendo la estructura de la imag
 -- preguntas y respuestas
 traduce el texto a español sin parafrasear
 
-
 -- preguntas y respuestas
 traduce el texto a español sin parafrasear
 
+-- preguntas y respuestas
+traduce el texto a español sin parafrasear
