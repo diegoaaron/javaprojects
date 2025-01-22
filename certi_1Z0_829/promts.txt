@@ -13,5 +13,3 @@ traduce el texto a español sin parafrasear
 
 -- preguntas y respuestas
 traduce el texto a español sin parafrasear
-
-
