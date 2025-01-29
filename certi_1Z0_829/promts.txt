@@ -3,7 +3,7 @@ entregame el código formateado para copiarlo y utlizando la menor cantidad de s
 explicame lo que dice los parrafos que no son codigo.
 
 -- traducción
-explicame el texto de la imagen en español siguiendo la estructura de la imagen y con poco parafraseo. la parte de código presentala formateada y utilizando la menor cantidad de saltos de linea.
+explicame el texto de la imagen en español siguiendo la estructura de la imagen y con poco parafraseo. si hay código presentala formateada y utilizando la menor cantidad de saltos de linea.
 
 -- preguntas y respuestas
 traduce el texto a español sin parafrasear
