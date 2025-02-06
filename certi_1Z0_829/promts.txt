@@ -8,6 +8,7 @@ explicame en español el texto de la imagen sin parafrasear. El texto se debe le
 -- preguntas y respuestas
 traduce el texto a español sin parafrasear
 
+
 -- soporte para documentos
 Code Highlighter 2 (libreoffice write)
 
