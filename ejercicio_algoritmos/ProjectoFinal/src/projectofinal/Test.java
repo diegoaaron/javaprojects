@@ -57,7 +57,6 @@ class NumeroTriangular {
 
     public boolean esTriangular(long num) {
         long raiz = (long) Math.sqrt(2 * num);
-        System.out.print(raiz+"dddd");
         return raiz * (raiz + 1) == 2 * num;
     }
 
