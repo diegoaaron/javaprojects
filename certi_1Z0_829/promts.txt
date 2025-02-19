@@ -10,3 +10,7 @@ traduce el texto a español sin parafrasear
 
 -- soporte para documentos
 Code Highlighter 2 (libreoffice write)
+
+-- soporte para documentos
+Code Highlighter 2 (libreoffice write)
+
