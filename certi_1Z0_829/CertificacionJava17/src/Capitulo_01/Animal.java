@@ -1,7 +1,7 @@
-package Capitulo_01;
+package capitulo_01;
 
 /**
- * Clase para probar que se puede tener varias clases en un mismo archivo
+ * Clase para probar que se puede tener varias clases en un mismo archivo | n° 2
  *
  * @author Diego Aarón
  */

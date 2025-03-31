@@ -1,7 +1,7 @@
-package Capitulo_01;
+package capitulo_01;
 
 /**
- * Clase inicial en la cual creamos un campo y método
+ * Clase inicial en la cual creamos un campo y método | n° 1
  *
  * @author Diego Aarón
  */

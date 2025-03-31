@@ -19,12 +19,13 @@ public class CertificacionJava17 {
     
     /**
      * Método principal que inicia la ejecución del programa.
-     * Procesa los argumentos de línea de comandos y configura
-     * el entorno de ejecución.
      * 
      * @param args argumentos del metodo main
      */
     public static void main(String[] args) {
-        // Código del método main
+        
+        // System.out.println(args[0]); 
+        // System.out.println(args[1]);
+        
     }
 }
