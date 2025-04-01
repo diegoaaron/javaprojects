@@ -39,4 +39,24 @@ public class Variables {
         int a1, a2, a3 = 0;
     }
 
+    /**
+     * no compila la funcion porque faltla un valor para onlyOneBranch en el "else"
+     */
+    void findAndswer(boolean check) {
+        int answer;
+        int otherAnswer;
+        int onlyBranch;
+
+        if (check) {
+            onlyBranch = 3;
+            answer = 1;
+        } else {
+            answer = 12;
+        }
+
+        System.out.println(answer);
+    }
+    
+    
+
 }
