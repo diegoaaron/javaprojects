@@ -63,6 +63,9 @@ public class Conversion {
                                  """;
         System.out.println(argumentoBloque4);
 
+        var b = 3;
+        System.out.println(3 + " - " + ((Object) b).getClass().getName());
+
     }
 
 }

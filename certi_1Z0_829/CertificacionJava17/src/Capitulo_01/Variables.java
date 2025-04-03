@@ -69,11 +69,52 @@ public class Variables {
 
     /**
      * mostrando el uso de "var" para definir variables locales
+     *
      */
     public void whatTypeAm() {
         var name = "Hello";
         var size = 7;
         // name = 33; no funciona ya que var no soporte cambiar el tipo de variable
+
+        //var sili;
+        // sili = 3; no compila porque al utilizar var la definición y asignación van en una sola línea
     }
 
+    /**
+     * probando como definir campos con var
+     *
+     * @param check parametro basico
+     */
+    public void twoTipes(boolean check) {
+
+        /*
+        var question;
+         question = 1; debe ir todo en 1 sola linea cuando usamos var
+        
+        var answer;
+        if (check){
+          answer = 33;        
+        } else {
+          answer = 22;
+        }
+        
+        System.out.println(answer);
+         */
+    }
+
+    /**
+     * mas pruebas de la inferencia de tipos con "var"
+     */
+    public void tipes() {
+        //int a, var b = 3; no compila porque la inferencia de tipos debe ir sola en 1 linea
+        //var n = null; deberia inferirlo al tipo Object pero Java no acepta esta acción
+    }
+
+    /*
+    public int addition(var a, var b){
+        return a + b;
+    }
+    
+    no compila porque var se debe usar variables locales y no como parametros
+     */
 }
