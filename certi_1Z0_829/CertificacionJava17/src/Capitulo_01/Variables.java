@@ -7,6 +7,7 @@ package capitulo_01;
  */
 public class Variables {
 
+    // var tr1 = "hola"; no compila ya que var no funciona para variables de instancia
     /**
      * Constructor de referencia
      */
@@ -65,14 +66,14 @@ public class Variables {
         boolean value; // value es una variable local
         //findAndswer(value); no compila porque "value" no se inicializo
     }
-    
+
     /**
      * mostrando el uso de "var" para definir variables locales
      */
-    public void whatTypeAm(){
+    public void whatTypeAm() {
         var name = "Hello";
         var size = 7;
-        
+        // name = 33; no funciona ya que var no soporte cambiar el tipo de variable
     }
 
 }
