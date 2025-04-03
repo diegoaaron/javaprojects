@@ -3,7 +3,7 @@ package capitulo_01;
 /**
  * Clase que explica detalles sobre la declaración de variables | n° 5
  *
- * @author usuario
+ * @author Diego Aarón
  */
 public class Variables {
 
@@ -40,7 +40,7 @@ public class Variables {
     }
 
     /**
-     * no compila la funcion porque faltla un valor para onlyOneBranch en el "else"
+     * no compila la funcion porque falta un valor para onlyBranch en el "else"
      */
     void findAndswer(boolean check) {
         int answer;
@@ -55,8 +55,24 @@ public class Variables {
         }
 
         System.out.println(answer);
+        // System.out.println(onlyBranch); 
+    }
+
+    /**
+     * mostrando posibles problemas con una variable local
+     */
+    public void checkAnswer() {
+        boolean value; // value es una variable local
+        //findAndswer(value); no compila porque "value" no se inicializo
     }
     
-    
+    /**
+     * mostrando el uso de "var" para definir variables locales
+     */
+    public void whatTypeAm(){
+        var name = "Hello";
+        var size = 7;
+        
+    }
 
 }
