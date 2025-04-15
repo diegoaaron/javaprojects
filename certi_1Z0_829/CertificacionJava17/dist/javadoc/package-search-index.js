@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"capitulo_01"},{"l":"certificacionjava17"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"capitulo_01"},{"l":"capitulo_02"},{"l":"certificacionjava17"}];updateSearchResults();
